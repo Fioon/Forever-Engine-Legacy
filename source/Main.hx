@@ -263,6 +263,7 @@ class Main extends Sprite
 			Application.current.window.alert(errMsg, "Error!");
 		}
 
+		Application.current.window.alert(errMsg, "Apk Error!");
 		Sys.exit(1);
 	}
 }
