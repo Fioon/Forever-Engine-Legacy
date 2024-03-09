@@ -144,6 +144,10 @@ class Main extends Sprite
 
 		FlxTransitionableState.skipNextTransIn = true;
 
+		gameWidth = 1280;
+		gameHeight = 720;
+		zoom = 1;
+
 		// here we set up the base game
 		var gameCreate:FlxGame;
 		//gameCreate = new FlxGame(gameWidth, gameHeight, mainClassState, zoom, framerate, framerate, skipSplash);
