@@ -12,7 +12,7 @@ import meta.data.Conductor;
 import meta.state.*;
 import meta.state.menus.*;
 #if android
-//import android.Hardware;
+import android.Hardware;
 #end
 
 class GameOverSubstate extends MusicBeatSubState
@@ -52,7 +52,7 @@ class GameOverSubstate extends MusicBeatSubState
 		add(camFollow);
 
 		#if android
-		//Hardware.vibrate(500);
+		Hardware.vibrate(500);
 		#end
 
 		Conductor.changeBPM(100);
