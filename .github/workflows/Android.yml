@@ -55,7 +55,7 @@ jobs:
           haxelib install hscript
           haxelib install flixel-addons
           haxelib install polymod
-          haxelib git extension-androidtools https://github.com/Fioon/extension-androidtools.git
+          haxelib install extension-androidtools 1.4.0      
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib list
           
