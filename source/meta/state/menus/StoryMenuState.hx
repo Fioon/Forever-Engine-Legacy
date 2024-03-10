@@ -24,6 +24,7 @@ class StoryMenuState extends MusicBeatState
 	var curDifficulty:Int = 1;
 
 	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
+        public static var hideStoryMode:Array<Bool> = [false, false, false, true, false, true, false];
 
 	var weekCharacters:Array<Dynamic> = [
 		['', 'bf', 'gf'],
@@ -96,6 +97,7 @@ class StoryMenuState extends MusicBeatState
 
 		for (i in 0...Main.gameWeeks.length)
 		{
+		   if(!hideStoryMode[i]){
 			var weekThing:MenuItem = new MenuItem(0, yellowBG.y + yellowBG.height + 10, i);
 			weekThing.y += ((weekThing.height + 20) * i);
 			weekThing.targetY = i;
@@ -116,6 +118,7 @@ class StoryMenuState extends MusicBeatState
 				lock.antialiasing = true;
 				grpLocks.add(lock);
 			}
+		   }
 		}
 
 		trace("Line 96");
@@ -262,6 +265,8 @@ class StoryMenuState extends MusicBeatState
 
 	function selectWeek()
 	{
+	   if(!hideStoryMode[curWeek])
+	   {
 		if (weekUnlocked[curWeek])
 		{
 			if (stopspamming == false)
@@ -290,6 +295,7 @@ class StoryMenuState extends MusicBeatState
 				Main.switchState(this, new PlayState());
 			});
 		}
+	    }
 	}
 
 	function changeDifficulty(change:Int = 0):Void
