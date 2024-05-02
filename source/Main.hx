@@ -69,6 +69,9 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+		
+		SUtil.check();
+		
 		songListHandler = new HScript();
 		songListHandler.loadModule(Paths.hxs('songs/songList'));
 		if (songListHandler.exists("returnSongList"))
@@ -103,9 +106,7 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 			// this just kind of sets up the camera zoom in accordance to the surface width and camera zoom.
 			// if set to negative one, it is done so automatically, which is the default.
-		}
-
-                SUtil.check();
+		}       
 		
 		FlxTransitionableState.skipNextTransIn = true;
 
