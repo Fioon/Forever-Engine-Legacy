@@ -96,7 +96,7 @@ class HScript
 		interp.variables.set("FlxCamera", FlxCamera);
 		interp.variables.set("FlxMath", FlxMath);
 		interp.variables.set("FlxRandom", FlxRandom);
-		interp.variables.set("FlxPoint", FlxPoint);
+		//interp.variables.set("FlxPoint", FlxPoint);
 		interp.variables.set("FlxRect", FlxRect);
 		interp.variables.set("FlxTween", FlxTween);
 		interp.variables.set("FlxTimer", FlxTimer);
