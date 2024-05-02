@@ -144,7 +144,7 @@ class HScript
 	    		interp.variables.set(i, params.get(i));
 	    	}
 	    }
-		interp.execute(parser.parseString(File.getContent(path),path));
+		interp.execute(parser.parseString(SUtil.getPath() + File.getContent(path),path));
 	}
 
 	//from Hypno's Lullaby v2 source code
