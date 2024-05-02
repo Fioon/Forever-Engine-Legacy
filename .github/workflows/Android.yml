@@ -45,18 +45,18 @@ jobs:
         run: |
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null
-          haxelib install lime 7.9.0
-          haxelib install openfl 9.2.0
-          haxelib install flixel 5.5.0
+          haxelib install lime 7.9.0 --quite
+          haxelib install openfl 9.2.0 --quite
+          haxelib install flixel 5.5.0 --quite
           haxelib run lime setup flixel
-          haxelib install flixel-tools
+          haxelib install flixel-tools --quite
           haxelib run lime setup
-          haxelib install flixel-ui
-          haxelib install hscript
-          haxelib install flixel-addons
-          haxelib install polymod
-          haxelib install extension-androidtools 1.4.0      
-          haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+          haxelib install flixel-ui --quite
+          haxelib install hscript --quite
+          haxelib install Flixel-addons --quite
+          haxelib install polymod --quite
+          haxelib install extension-androidtools 1.4.0 --quite     
+          haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quite
           haxelib list
           
       - name: Create Version Tag
