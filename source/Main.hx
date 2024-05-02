@@ -105,12 +105,13 @@ class Main extends Sprite
 			// if set to negative one, it is done so automatically, which is the default.
 		}
 
-        SUtil.check();        
+                SUtil.check();
+		
 		FlxTransitionableState.skipNextTransIn = true;
 
 		// here we set up the base game
 		var gameCreate:FlxGame;
-		gameCreate = new FlxGame(gameWidth, gameHeight, mainClassState, zoom, framerate, framerate, skipSplash);
+		gameCreate = new FlxGame(gameWidth, gameHeight, mainClassState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash);
 		addChild(gameCreate); // and create it afterwards
 
 		// default game FPS settings, I'll probably comment over them later.
@@ -222,7 +223,7 @@ class Main extends Sprite
 			Application.current.window.alert(errMsg, "Error!");
 		}
 
-        Application.current.window.alert(errMsg, "Forever Engine v0.3.1 | Error!");
+                Application.current.window.alert(errMsg, "Forever Engine v0.3.1 | Error!");
 		Sys.exit(1);
 	}
 }
