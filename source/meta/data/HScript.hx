@@ -109,7 +109,7 @@ class HScript
 		interp.variables.set("FlxColor", RealColor); // lol
 		interp.variables.set("FlxGroup", FlxGroup);
 		interp.variables.set("FlxGraphic", FlxGraphic);
-		interp.variables.set("FlxTransWindow", flixel.FlxTransWindow);
+		//interp.variables.set("FlxTransWindow", flixel.FlxTransWindow);
 
 		// Classes (Forever)
 		interp.variables.set("Init", Init);
