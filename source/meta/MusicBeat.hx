@@ -106,6 +106,7 @@ class MusicBeatState extends FNFUIState
 			FlxG.cameras.add(camControls);
 			camControls.bgColor.alpha = 0;
 			virtualPad.cameras = [camControls];
+			FlxG.cameras.setDefaultDrawTarget(camControls, false);
 		}
 	}
 	#end
@@ -288,6 +289,7 @@ class MusicBeatSubState extends FlxSubState
 			FlxG.cameras.add(camControls);
 			camControls.bgColor.alpha = 0;
 			virtualPad.cameras = [camControls];
+			FlxG.cameras.setDefaultDrawTarget(camControls, false);
 		}
 	}
 	#end
