@@ -35,14 +35,11 @@ class Main extends Sprite
 	// class action variables
 	public static var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	public static var gameHeight:Int = 720; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
-
 	public static var mainClassState:Class<FlxState> = Init; // Determine the main class state of the game
 	public static var framerate:Int = 120; // How many frames per second the game should run at.
-
 	public static var gameVersion:String = '0.3.1';
-
 	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
-	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
+	var skipSplash:Bool = false; // Whether to skip the flixel splash screen that appears in release mode.
 	var infoCounter:Overlay; // initialize the heads up display that shows information before creating it.
 
 	// heres gameweeks set up!
@@ -106,7 +103,13 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 			// this just kind of sets up the camera zoom in accordance to the surface width and camera zoom.
 			// if set to negative one, it is done so automatically, which is the default.
-		}       
+		} 
+
+		#if android
+		gameWidth = 1280;
+		gameHeight = 720;
+		zoom = 1;
+		#end
 		
 		FlxTransitionableState.skipNextTransIn = true;
 
