@@ -105,6 +105,7 @@ class HScript
 		// Classes (Forever)
 		interp.variables.set("Init", Init);
 		interp.variables.set("Paths", Paths);
+		interp.variables.set("SUtil", SUtil);
 		interp.variables.set("Note", Note);
 		interp.variables.set("Strumline", Strumline);
 		interp.variables.set("Conductor", Conductor);
