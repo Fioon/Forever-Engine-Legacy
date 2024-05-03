@@ -27,7 +27,7 @@ class HealthIcon extends FlxSprite
 			trimmedCharacter = trimmedCharacter.substring(0, trimmedCharacter.indexOf('-'));
 
 		var iconPath = char;
-		if (!FileSystem.exists(Paths.getPath('images/icons/icon-' + iconPath + '.png', IMAGE)))
+		if (!FileSystem.exists(SUtil.getPath() + Paths.getPath('images/icons/icon-' + iconPath + '.png', IMAGE)))
 		{
 			if (iconPath != trimmedCharacter)
 				iconPath = trimmedCharacter;
@@ -38,7 +38,7 @@ class HealthIcon extends FlxSprite
 
 		antialiasing = true;
 		var iconGraphic:FlxGraphic;
-		if (FileSystem.exists(Paths.getPath('images/icons/icon-' + iconPath + '.png', IMAGE)))
+		if (FileSystem.exists(SUtil.getPath() + Paths.getPath('images/icons/icon-' + iconPath + '.png', IMAGE)))
 	    	iconGraphic = Paths.image('icons/icon-' + iconPath);
 		else
 			iconGraphic = Paths.image('icons/icon-face');
