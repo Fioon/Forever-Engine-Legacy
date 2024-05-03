@@ -106,7 +106,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 
 	public function stageArray()
 	{
-		var tempStageArray:Array<String> = FileSystem.readDirectory('assets/stages');
+		var tempStageArray:Array<String> = FileSystem.readDirectory(SUtil.getPath() + 'assets/stages');
 		stageList.splice(0, stageList.length);
 		for (stage in tempStageArray)
 		{
@@ -173,6 +173,8 @@ class Stage extends FlxTypedGroup<FlxBasic>
 
 	public function repositionPlayers(curStage, boyfriend:Character, dad:Character, gf:Character):Void
 	{
+		if (stageHandler.exists("repositionPlayers"))
+			stageHandler.get("repositionPlayers")(curStage, boyfriend, dad, gf);
 		// REPOSITIONING PER STAGE
 		switch (curStage)
 		{
