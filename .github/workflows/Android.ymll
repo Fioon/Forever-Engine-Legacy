@@ -52,7 +52,8 @@ jobs:
           haxelib install flixel-tools
           haxelib run lime setup
           haxelib install flixel-ui
-          haxelib install hscript 2.5.0
+          haxelib install hscript
+          haxelib install hxCodec 2.6.0
           haxelib install flixel-addons
           haxelib install polymod
           haxelib install extension-androidtools 1.4.0   
