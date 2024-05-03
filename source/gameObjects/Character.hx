@@ -73,7 +73,7 @@ class Character extends FNFSprite
 			offsetX: 0,
 			camOffsetY: 0,
 			camOffsetX: 0,
-	        zoomOffset:0,
+	                zoomOffset:0,
 			quickDancer: false
 		};
 		var tex:FlxAtlasFrames;
@@ -87,12 +87,12 @@ class Character extends FNFSprite
 		{
 		    try
 		    {
-				characterArray();
+			    characterArray();
 			    scriptHandler.loadModule(Paths.hxs('characters/$curCharacter'), exposure);
-			}
+		    }
 		    catch (e:Dynamic)
 		    {
-		    	Application.current.window.alert('An error while loading character($curCharacter):\nmissing character file', "Character Error!");
+		    	Application.current.window.alert('An error while loading character($curCharacter):\nmissing character file\n'+e, "Character Error!");
 		    	setDefaultCharacter();
 		    }
 	        if (scriptHandler.exists("onCharacterCreate"))
@@ -102,15 +102,15 @@ class Character extends FNFSprite
 				Application.current.window.alert('An error while loading character($curCharacter):\nmissing image files', "Character Error!");
 				setDefaultCharacter();
 			}
-	    }
-	    catch (e:Dynamic)
-	    {
-	    	Application.current.window.alert('An error while creating character($curCharacter):\n'+e, "Character Error!");
+	         }
+	         catch (e:Dynamic)
+	         {
+	    	        Application.current.window.alert('An error while creating character($curCharacter):\n'+e, "Character Error!");
 			setDefaultCharacter();
 		}
 		
 		// set up offsets cus why not
-		if (OpenFlAssets.exists(Paths.offsetTxt(curCharacter + 'Offsets')))
+		if (OpenFlAssets.exists(SUtil.getPath() + Paths.offsetTxt(curCharacter + 'Offsets')))
 		{
 			var characterOffsets:Array<String> = CoolUtil.coolTextFile(Paths.offsetTxt(curCharacter + 'Offsets'));
 			for (i in 0...characterOffsets.length)
@@ -153,7 +153,7 @@ class Character extends FNFSprite
 	public var characterList:Array<String> = [];
 	
 	public function characterArray(){
-		var tempCharacterArray:Array<String> = FileSystem.readDirectory('assets/characters');
+		var tempCharacterArray:Array<String> = FileSystem.readDirectory(SUtil.getPath() + 'assets/characters');
 		characterList.splice(0, characterList.length);
 	    for (character in tempCharacterArray)
 	    {
