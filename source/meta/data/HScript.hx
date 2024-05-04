@@ -3,6 +3,7 @@ package meta.data;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.text.FlxText;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.tile.FlxGraphicsShader;
@@ -85,6 +86,7 @@ class HScript
 		interp.variables.set("FlxG", FlxG);
 		interp.variables.set("FlxSprite", FlxSprite);
 		//interp.variables.set("FlxAnimate", FlxAnimate);
+		interp.variables.set("FlxText", FlxText);
 		interp.variables.set("FlxCamera", FlxCamera);
 		interp.variables.set("FlxMath", FlxMath);
 		//interp.variables.set("FlxPoint", FlxPoint);
