@@ -1,5 +1,6 @@
 package;
-import flixel.system.FlxAssets.FlxShader;
+import shaders.FlxShader;
+//import flixel.system.FlxAssets.FlxShader;
 import openfl.display.BitmapData;
 import openfl.display.ShaderInput;
 import openfl.utils.Assets;
@@ -11,18 +12,15 @@ class VCRDistortionEffect
 {
   public var shader:VCRDistortionShader = new VCRDistortionShader();
   public function new(){
+    super();
     shader.iTime.value = [0];
     shader.vignetteOn.value = [true];
     shader.perspectiveOn.value = [true];
     shader.distortionOn.value = [true];
     shader.scanlinesOn.value = [true];
     shader.vignetteMoving.value = [true];
-    shader.noiseOn.value = [true];
     shader.glitchModifier.value = [1];
-    shader.iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];
-    var noise = Assets.getBitmapData(Paths.image("noise2"));
-    shader.noiseTex.input = noise;
-    shader.curvateOn.value = [true];
+    shader.iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];    
   }
 
   public function update(elapsed:Float){
@@ -30,18 +28,10 @@ class VCRDistortionEffect
     shader.iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];
   }
 
-  public function setCurvate(state:Bool){
-    shader.curvateOn.value[0] = state;
-  }
-
   public function setVignette(state:Bool){
     shader.vignetteOn.value[0] = state;
   }
-
-  public function setNoise(state:Bool){
-    shader.noiseOn.value[0] = state;
-  }
-
+  
   public function setPerspective(state:Bool){
     shader.perspectiveOn.value[0] = state;
   }
@@ -75,30 +65,8 @@ class VCRDistortionShader extends FlxShader
     uniform bool distortionOn;
     uniform bool scanlinesOn;
     uniform bool vignetteMoving;
-    uniform sampler2D noiseTex;
     uniform float glitchModifier;
     uniform vec3 iResolution;
-    uniform bool noiseOn;
-    uniform bool curvateOn;
-
-    vec2 rotate(vec2 v, float a)
-    {
-      float s = sin(a);
-      float c = cos(a);
-      mat2 m = mat2(c, -s, s, c);
-      return m * v;
-    }
-
-    vec2 vCrtCurvature (vec2 uv, float q, float daValues) {
-      float x = daValues - distance (uv, vec2 (daValues, daValues));
-      vec2 g = vec2 (daValues, daValues) - uv;
-
-      if(curvateOn){
-        return uv + g*x*q;
-      } else {
-        return uv;
-      }
-    }
 
     float onOff(float a, float b, float c)
     {
@@ -113,20 +81,13 @@ class VCRDistortionShader extends FlxShader
 
     }
 
-    float rbgToluminance(vec3 rgb)
-    {
-      return (rgb.r * 0.3) + (rgb.g * 0.59) + (rgb.b * 0.11);
-    }
-
-
     vec4 getVideo(vec2 uv)
       {
       	vec2 look = uv;
         if(distortionOn){
         	float window = 1./(1.+20.*(look.y-mod(iTime/4.,1.))*(look.y-mod(iTime/4.,1.)));
-        	look.x = look.x + (sin(look.y*10. + iTime)/50.*onOff(4.,4.,.3)*(1.+cos(iTime*80.))*window)*(glitchModifier*2);
-        	float vShift = 0.4*onOff(2.,3.,.9)*(sin(iTime)*sin(iTime*20.) +
-        										 (0.5 + 0.1*sin(iTime*200.)*cos(iTime)));
+        	look.x = look.x + (sin(look.y*10. + iTime)/50.*onOff(4.,4.,.3)*(1.+cos(iTime*80.))*window)*(glitchModifier*2.0);
+        	float vShift = 0.4*onOff(2.,3.,.9)*(sin(iTime)*sin(iTime*20.) + (0.5 + 0.1*sin(iTime*200.)*cos(iTime)));
         	look.y = mod(look.y + vShift*glitchModifier, 1.);
         }
       	vec4 video = flixel_texture2D(bitmap,look);
@@ -158,7 +119,7 @@ class VCRDistortionShader extends FlxShader
 
         float a = random(i);
         float b = random(i + vec2(1.,0.));
-    	float c = random(i + vec2(0., 1.));
+    	  float c = random(i + vec2(0., 1.));
         float d = random(i + vec2(1.));
 
         vec2 u = smoothstep(0., 1., f);
@@ -170,25 +131,16 @@ class VCRDistortionShader extends FlxShader
 
     vec2 scandistort(vec2 uv) {
     	float scan1 = clamp(cos(uv.y * 2.0 + iTime), 0.0, 1.0);
-    	float scan2 = clamp(cos(uv.y * 2.0 + iTime + 4.0) * 10.0, 0.0, 1.0);
+    	float scan2 = clamp(cos(uv.y * 2.0 + iTime + 4.0) * 10.0, 0.0, 1.0) ;
     	float amount = scan1 * scan2 * uv.x;
-      
-
-      uv = uv * 2.0 - 1.0;
-      uv *= 0.9;
-      uv = (uv + 1.0) * 0.5;
-
-    	uv.x -= 0.05 * mix(flixel_texture2D(noiseTex, vec2(uv.x, amount)).r * amount, amount, 0.9);
 
     	return uv;
 
     }
-
     void main()
     {
     	vec2 uv = openfl_TextureCoordv;
-      vec2 uvB = vCrtCurvature(uv, 0.5, 0.5);
-      vec2 curUV = screenDistort(uvB);
+      vec2 curUV = screenDistort(uv);
     	uv = scandistort(curUV);
     	vec4 video = getVideo(uv);
       float vigAmt = 1.0;
@@ -209,22 +161,14 @@ class VCRDistortionShader extends FlxShader
     	float vignette = (1.-vigAmt*(uv.y-.5)*(uv.y-.5))*(1.-vigAmt*(uv.x-.5)*(uv.x-.5));
 
       if(vignetteOn)
-    	 video *= vignette;
+    	 video *= float(vignette);
 
-      if(curUV.x<0 || curUV.x>1 || curUV.y<0 || curUV.y>1){
-        gl_FragColor = vec4(0,0,0,0);
-      }else{
-        if(noiseOn){
-          gl_FragColor = mix(video,vec4(noise(uv * 75.)),.05);
-        }else{
-          gl_FragColor = video;
-        }
 
+      gl_FragColor = mix(video,vec4(noise(uv * 75.)), 0.05);
+
+      if (curUV.x < 0.0 || curUV.x > 1.0 || curUV.y < 0.0 || curUV.y > 1.0) {
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
       }
-
-
-
-    }
   ')
   public function new()
   {
