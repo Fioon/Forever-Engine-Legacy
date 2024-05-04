@@ -1,6 +1,6 @@
 package;
-import shaders.FlxShader;
-//import flixel.system.FlxAssets.FlxShader;
+//import shaders.FlxShader;
+import flixel.system.FlxAssets.FlxShader;
 import openfl.display.BitmapData;
 import openfl.display.ShaderInput;
 import openfl.utils.Assets;
@@ -12,7 +12,6 @@ class VCRDistortionEffect
 {
   public var shader:VCRDistortionShader = new VCRDistortionShader();
   public function new(){
-    super();
     shader.iTime.value = [0];
     shader.vignetteOn.value = [true];
     shader.perspectiveOn.value = [true];
