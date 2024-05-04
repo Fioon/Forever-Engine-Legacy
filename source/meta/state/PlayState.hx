@@ -58,7 +58,7 @@ using StringTools;
 import meta.data.dependency.Discord;
 #end
 class PlayState extends MusicBeatState
-{
+{	
 	public static var startTimer:FlxTimer;
 
 	public var windowDad:Window;
@@ -68,6 +68,7 @@ class PlayState extends MusicBeatState
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
+	public static var VCRshader:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 2;
@@ -223,6 +224,13 @@ class PlayState extends MusicBeatState
 		allUIs.push(camHUD);
 		FlxCamera.defaultCameras = [camGame];
 
+		if (VCRshader)
+		{
+			var vcrDistortion:VCRDistortionEffect = new VCRDistortionEffect();
+                        camGame.setFilters([new ShaderFilter(vcrDistortion.shader)]); // it can be any other cam, in this case im using camGame
+			camHUD.setFilters([new ShaderFilter(vcrDistortion.shader)]); // it can be any other cam, in this case im using camGame
+		}
+			
 		// default song
 		if (SONG == null)
 			SONG = Song.loadFromJson('test', 'test');
@@ -1096,7 +1104,7 @@ class PlayState extends MusicBeatState
 	}
 
 	function goodNoteHit(coolNote:Note, character:Character, characterStrums:Strumline, ?canDisplayJudgement:Bool = true)
-	{
+	{	
 		if (!coolNote.wasGoodHit)
 		{
 			coolNote.wasGoodHit = true;
@@ -1595,6 +1603,9 @@ class PlayState extends MusicBeatState
 
 	function healthCall(?ratingMultiplier:Float = 0)
 	{
+	        if (Stage.stageHandler.exists("healthCall"))
+			Stage.stageHandler.get("healthCall")(ratingMultiplier);
+	        	
 		// health += 0.012;
 		var healthBase:Float = 0.06;
 		health += (healthBase * (ratingMultiplier / 100));
@@ -1602,6 +1613,9 @@ class PlayState extends MusicBeatState
 
 	function startSong():Void
 	{
+		if (Stage.stageHandler.exists("startSong"))
+			Stage.stageHandler.get("startSong")();
+	        
 		startingSong = false;
 
 		previousFrameTime = FlxG.game.ticks;
@@ -1947,6 +1961,9 @@ class PlayState extends MusicBeatState
 
 	public function songIntroCutscene()
 	{
+		if (Stage.stageHandler.exists("songIntroCutscene"))
+			Stage.stageHandler.get("songIntroCutscene")();
+	        
 		switch (curSong.toLowerCase())
 		{
 			case "winter-horrorland":
@@ -2074,7 +2091,9 @@ class PlayState extends MusicBeatState
 
 	private function startCountdown():Void
 	{
-	    #if android
+		if (Stage.stageHandler.exists("startCountdown"))
+			Stage.stageHandler.get("startCountdown")();
+	        #if android
 		androidControls.visible = true;
 		#end
 		
