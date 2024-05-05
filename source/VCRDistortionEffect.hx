@@ -1,58 +1,12 @@
 package;
-//import shaders.FlxShader;
 import flixel.system.FlxAssets.FlxShader;
 import openfl.display.BitmapData;
 import openfl.display.ShaderInput;
 import openfl.utils.Assets;
 import flixel.FlxG;
 import openfl.Lib;
-import flixel.math.FlxPoint;
 
-class VCRDistortionEffect
-{
-  public var shader:VCRDistortionShader = new VCRDistortionShader();
-  public function new(){
-    shader.iTime.value = [0];
-    shader.vignetteOn.value = [true];
-    shader.perspectiveOn.value = [true];
-    shader.distortionOn.value = [true];
-    shader.scanlinesOn.value = [true];
-    shader.vignetteMoving.value = [true];
-    shader.glitchModifier.value = [1];
-    shader.iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];    
-  }
-
-  public function update(elapsed:Float){
-    shader.iTime.value[0] += elapsed;
-    shader.iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];
-  }
-
-  public function setVignette(state:Bool){
-    shader.vignetteOn.value[0] = state;
-  }
-  
-  public function setPerspective(state:Bool){
-    shader.perspectiveOn.value[0] = state;
-  }
-
-  public function setGlitchModifier(modifier:Float){
-    shader.glitchModifier.value[0] = modifier;
-  }
-
-  public function setDistortion(state:Bool){
-    shader.distortionOn.value[0] = state;
-  }
-
-  public function setScanlines(state:Bool){
-    shader.scanlinesOn.value[0] = state;
-  }
-
-  public function setVignetteMoving(state:Bool){
-    shader.vignetteMoving.value[0] = state;
-  }
-}
-
-class VCRDistortionShader extends FlxShader
+class VCRDistortionEffect extends FlxShader
 {
 
   @:glFragmentSource('
@@ -171,6 +125,18 @@ class VCRDistortionShader extends FlxShader
   ')
   public function new()
   {
+    iTime.value = [0];
+    vignetteOn.value = [true];
+    perspectiveOn.value = [true];
+    distortionOn.value = [true];
+    scanlinesOn.value = [true];
+    vignetteMoving.value = [true];
+    glitchModifier.value = [1];
+    iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];
     super();
+  }
+  public function update(elapsed:Float){
+    iTime.value[0] += elapsed;
+    iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];
   }
 }
