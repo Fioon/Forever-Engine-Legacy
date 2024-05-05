@@ -229,11 +229,15 @@ class PlayState extends MusicBeatState
 		allUIs.push(camHUD);
 		FlxCamera.defaultCameras = [camGame];
 
+		if (Stage.stageHandler.exists("returnVcrShader"))
+			VCRshader = Stage.stageHandler.get("returnVcrShader")();
+
 		if (VCRshader)
 		{
 			var vcrDistortion:VCRDistortionEffect = new VCRDistortionEffect();
-                        camGame.setFilters([new ShaderFilter(vcrDistortion.shader)]); // it can be any other cam, in this case im using camGame
-			camHUD.setFilters([new ShaderFilter(vcrDistortion.shader)]); // it can be any other cam, in this case im using camGame
+                        camGame.setFilters([new ShaderFilter(vcrDistortion)]); // it can be any other cam, in this case im using camGame
+			camHUD.setFilters([new ShaderFilter(vcrDistortion)]);
+			camOther.setFilters([new ShaderFilter(vcrDistortion)]);// it can be any other cam, in this case im using camGame
 		}
 			
 		// default song
