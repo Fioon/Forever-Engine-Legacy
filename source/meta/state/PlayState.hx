@@ -228,17 +228,6 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.add(camOther);
 		allUIs.push(camHUD);
 		FlxCamera.defaultCameras = [camGame];
-
-		if (Stage.stageHandler.exists("returnVcrShader"))
-			VCRshader = Stage.stageHandler.get("returnVcrShader")();
-
-		if (VCRshader)
-		{
-			var vcrDistortion:VCRDistortionEffect = new VCRDistortionEffect();
-                        camGame.setFilters([new ShaderFilter(vcrDistortion)]); // it can be any other cam, in this case im using camGame
-			camHUD.setFilters([new ShaderFilter(vcrDistortion)]);
-			camOther.setFilters([new ShaderFilter(vcrDistortion)]);// it can be any other cam, in this case im using camGame
-		}
 			
 		// default song
 		if (SONG == null)
@@ -319,6 +308,17 @@ class PlayState extends MusicBeatState
 		darknessBG.alpha = (100 - Init.trueSettings.get('Stage Opacity')) / 100;
 		darknessBG.scrollFactor.set(0, 0);
 		add(darknessBG);
+
+		if (Stage.stageHandler.exists("returnVcrShader"))
+			VCRshader = Stage.stageHandler.get("returnVcrShader")();
+
+		if (VCRshader)
+		{
+			var vcrDistortion:VCRDistortionEffect = new VCRDistortionEffect();
+                        camGame.setFilters([new ShaderFilter(vcrDistortion)]); // it can be any other cam, in this case im using camGame
+			camHUD.setFilters([new ShaderFilter(vcrDistortion)]);
+			camOther.setFilters([new ShaderFilter(vcrDistortion)]);// it can be any other cam, in this case im using camGame
+		}
 
 		// strum setup
 		strumLines = new FlxTypedGroup<Strumline>();
