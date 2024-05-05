@@ -1,4 +1,4 @@
-package.meta.data;
+package meta.data;
 
 import flixel.math.FlxMath;
 
