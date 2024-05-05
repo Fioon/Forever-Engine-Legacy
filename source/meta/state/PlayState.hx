@@ -134,6 +134,7 @@ class PlayState extends MusicBeatState
 	var songTime:Float = 0;
 
 	public static var camHUD:FlxCamera;
+	public static var camOther:FlxCamera;
 	public static var camGame:FlxCamera;
 	public static var dialogueHUD:FlxCamera;
 
@@ -219,8 +220,12 @@ class PlayState extends MusicBeatState
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 
+		camOther = new FlxCamera();
+		camOther.bgColor.alpha = 0;
+
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
+		FlxG.cameras.add(camOther);
 		allUIs.push(camHUD);
 		FlxCamera.defaultCameras = [camGame];
 
