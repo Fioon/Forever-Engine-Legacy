@@ -19,6 +19,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import flixel.ui.FlxBar;
 import flixel.addons.display.FlxRuntimeShader;
 // import flxanimate.FlxAnimate;
 import gameObjects.Boyfriend;
@@ -108,6 +109,7 @@ class HScript
 		interp.variables.set("FlxGraphicsShader", FlxGraphicsShader);
 		interp.variables.set("FlxColor", RealColor); // lol
 		interp.variables.set("FlxGroup", FlxGroup);
+		interp.variables.set("FlxBar", FlxBar);
 		interp.variables.set("FlxGraphic", FlxGraphic);
 		interp.variables.set("FlxRuntimeShader", FlxRuntimeShader);
 		//interp.variables.set("FlxTransWindow", flixel.FlxTransWindow);
