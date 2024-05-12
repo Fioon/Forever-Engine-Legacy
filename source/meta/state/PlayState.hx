@@ -46,6 +46,7 @@ import openfl.display.GraphicsShader;
 import openfl.display.Sprite;
 import openfl.events.KeyboardEvent;
 import openfl.filters.ShaderFilter;
+import flixel.system.FlxAssets.FlxShader;
 import openfl.geom.Matrix;
 import openfl.geom.Rectangle;
 import openfl.media.Sound;
@@ -68,7 +69,6 @@ class PlayState extends MusicBeatState
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
-	public static var VCRshader:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 2;
@@ -137,6 +137,8 @@ class PlayState extends MusicBeatState
 	public static var camOther:FlxCamera;
 	public static var camGame:FlxCamera;
 	public static var dialogueHUD:FlxCamera;
+
+	public var vcr:VCRMario85;
 
 	public var camDisplaceX:Float = 0;
 	public var camDisplaceY:Float = 0; // might not use depending on result
@@ -228,7 +230,11 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.add(camOther);
 		allUIs.push(camHUD);
 		FlxCamera.defaultCameras = [camGame];
-			
+
+		vcr = new VCRMario85();
+		camGame.setFilters([new ShaderFilter(vcr)]);
+		camHUD.setFilters([new ShaderFilter(vcr)]);
+
 		// default song
 		if (SONG == null)
 			SONG = Song.loadFromJson('test', 'test');
@@ -308,17 +314,6 @@ class PlayState extends MusicBeatState
 		darknessBG.alpha = (100 - Init.trueSettings.get('Stage Opacity')) / 100;
 		darknessBG.scrollFactor.set(0, 0);
 		add(darknessBG);
-
-		if (Stage.stageHandler.exists("returnVcrShader"))
-			VCRshader = Stage.stageHandler.get("returnVcrShader")();
-
-		if (VCRshader)
-		{
-			var vcrDistortion:VCRDistortionEffect = new VCRDistortionEffect();
-                        camGame.setFilters([new ShaderFilter(vcrDistortion)]); // it can be any other cam, in this case im using camGame
-			camHUD.setFilters([new ShaderFilter(vcrDistortion)]);
-			camOther.setFilters([new ShaderFilter(vcrDistortion)]);// it can be any other cam, in this case im using camGame
-		}
 
 		// strum setup
 		strumLines = new FlxTypedGroup<Strumline>();
