@@ -138,8 +138,6 @@ class PlayState extends MusicBeatState
 	public static var camGame:FlxCamera;
 	public static var dialogueHUD:FlxCamera;
 
-	public var vcr:VCRMario85;
-
 	public var camDisplaceX:Float = 0;
 	public var camDisplaceY:Float = 0; // might not use depending on result
 
@@ -230,10 +228,6 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.add(camOther);
 		allUIs.push(camHUD);
 		FlxCamera.defaultCameras = [camGame];
-
-		vcr = new VCRMario85();
-		camGame.setFilters([new ShaderFilter(vcr)]);
-		camHUD.setFilters([new ShaderFilter(vcr)]);
 
 		// default song
 		if (SONG == null)
