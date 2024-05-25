@@ -28,4 +28,4 @@ class ChromaticAberration extends FlxShader
 	{
 		super();
 	}
-} I'm
+}
