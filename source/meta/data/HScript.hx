@@ -1,5 +1,7 @@
 package meta.data;
 
+import shaders.ShaderObject;
+import meta.FlxTweenPlayState;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -117,6 +119,8 @@ class HScript
 		// Classes (Forever)
 		interp.variables.set("Init", Init);
 		interp.variables.set("Paths", Paths);
+		interp.variables.set("ShaderObject", ShaderObject);
+		interp.variables.set("FlxTweenPlayState", FlxTweenPlayState);
 		interp.variables.set("SUtil", SUtil);
 		interp.variables.set("Note", Note);
 		interp.variables.set("Strumline", Strumline);
