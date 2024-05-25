@@ -6,6 +6,7 @@ import android.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
 #end
+import shaders.ShaderObject;
 import flixel.FlxG;
 import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
@@ -324,6 +325,7 @@ class MusicBeatSubState extends FlxSubState
 			stepHit();
 
 		super.update(elapsed);
+		ShaderObject.update(elapsed);
 	}
 
 	private function updateCurStep():Void
