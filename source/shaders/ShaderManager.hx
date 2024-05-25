@@ -27,7 +27,7 @@ class ShaderManager {
 		glitch.isDad.value = [false];
 
 		block.intensity.value = [0];
-		block.abstractstuff.input = BitmapData.fromFile("assets/images/county-sprites/abstract.png");
+		block.abstractstuff.input = BitmapData.fromFile("assets/images/abstract.png");
 
 		bloom.intensity.value = [0];
 
