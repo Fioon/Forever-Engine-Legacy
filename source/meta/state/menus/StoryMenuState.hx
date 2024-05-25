@@ -1,5 +1,6 @@
 package meta.state.menus;
 
+import shaders.ShaderObject;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
@@ -68,6 +69,8 @@ class StoryMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
+		FlxG.camera.filters =[ShaderObject.getShader("vhs")];
+		
 		scoreText = new FlxText(10, 10, 0, "SCORE: 49324858", 36);
 		scoreText.setFormat("VCR OSD Mono", 32);
 
