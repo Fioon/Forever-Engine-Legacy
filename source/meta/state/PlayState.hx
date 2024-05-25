@@ -1,5 +1,7 @@
 package meta.state;
 
+import shaders.ShaderObject;
+import meta.FlxTweenPlayState;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -191,6 +193,7 @@ class PlayState extends MusicBeatState
 		super.create();
 		instance = this;
 
+		FlxTweenPlayState.globalManager.active = true;
 		// reset any values and variables that are static
 		songScore = 0;
 		combo = 0;
@@ -601,6 +604,7 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
+		FlxTweenPlayState.globalManager.update(elapsed);
 		botplayAlpha = FlxMath.lerp(botplayAlpha, strumLines.members[playerLane].autoplay ? 1 : 0, elapsed / (1 / 60));
 		botplaySine += 180 * (elapsed / 4);
 		botplayText.alpha = botplayAlpha - Math.abs(Math.sin((Math.PI * botplaySine) / 180));
@@ -1819,6 +1823,7 @@ class PlayState extends MusicBeatState
 				//	trace('nulled song finished');
 			}
 
+			FlxTweenPlayState.globalManager.active = false;
 			// trace('ui shit break');
 			if ((startTimer != null) && (!startTimer.finished))
 				startTimer.active = false;
@@ -1843,6 +1848,7 @@ class PlayState extends MusicBeatState
 			///*
 			updateRPC(false);
 			// */
+			FlxTweenPlayState.globalManager.active = true;
 		}
 
 		Paths.clearUnusedMemory();
