@@ -60,6 +60,9 @@ using StringTools;
 #if desktop
 import meta.data.dependency.Discord;
 #end
+
+import VideoHandler as MP4Handler;
+
 class PlayState extends MusicBeatState
 {	
 	public static var startTimer:FlxTimer;
@@ -125,6 +128,8 @@ class PlayState extends MusicBeatState
 	public var generatedMusic:Bool = false;
 
 	private var startingSong:Bool = false;
+	public var endingSong:Bool = false;
+	public var inCutscene:Bool = false;
 	private var paused:Bool = false;
 	var startedCountdown:Bool = false;
 	var inCutscene:Bool = false;
@@ -468,6 +473,42 @@ class PlayState extends MusicBeatState
 		return add(Object);
 	}
 
+	public function startVideo(name:String)
+	{
+		inCutscene = true;
+
+		var filepath:String = Paths.video(name);
+		#if sys
+		if(!FileSystem.exists(filepath))
+		#else
+		if(!OpenFlAssets.exists(filepath))
+		#end
+		{
+			FlxG.log.warn('Couldnt find video file: ' + name);
+			startAndEnd();
+			return;
+		}
+
+		var video:MP4Handler = new MP4Handler();
+		video.playVideo(filepath);
+		video.finishCallback = function()
+		{
+			startAndEnd();
+			return;
+		}
+		/*FlxG.log.warn('Platform not supported!');
+		startAndEnd();
+		return;*/
+	}
+
+	function startAndEnd()
+	{
+		if(endingSong)
+			endSong();
+		else
+			startCountdown();
+	}
+	
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey>
 	{
 		var copiedArray:Array<FlxKey> = arrayToCopy.copy();
@@ -1864,6 +1905,7 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
+		endingSong = true;
 	    #if android
 		androidControls.visible = false;
 		#end
