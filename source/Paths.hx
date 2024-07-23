@@ -320,7 +320,7 @@ class Paths
 
 	static public function video(key:String)
 	{
-		return SUtil.getPath() + 'assets/videos/$key.$VIDEO_EXT';
+		return SUtil.getPath() + 'assets/videos/$key.mp4';
 	}
 	
 	inline static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
