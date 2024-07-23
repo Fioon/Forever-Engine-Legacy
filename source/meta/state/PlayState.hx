@@ -54,6 +54,7 @@ import openfl.geom.Rectangle;
 import openfl.media.Sound;
 import openfl.utils.Assets;
 import sys.io.File;
+import sys.FileSystem;
 
 using StringTools;
 
@@ -132,7 +133,7 @@ class PlayState extends MusicBeatState
 	public var inCutscene:Bool = false;
 	private var paused:Bool = false;
 	var startedCountdown:Bool = false;
-	var inCutscene:Bool = false;
+	//var inCutscene:Bool = false;
 
 	var canPause:Bool = true;
 
