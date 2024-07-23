@@ -224,16 +224,15 @@ class PlayState extends MusicBeatState
 		// create the game camera
 		camGame = new FlxCamera();
 
+		camOther = new FlxCamera();
+		camOther.bgColor.alpha = 0;
 		// create the hud camera (separate so the hud stays on screen)
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 
-		camOther = new FlxCamera();
-		camOther.bgColor.alpha = 0;
-
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camHUD);
 		FlxG.cameras.add(camOther);
+		FlxG.cameras.add(camHUD);
 		allUIs.push(camHUD);
 		FlxCamera.defaultCameras = [camGame];
 
@@ -1378,7 +1377,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!Init.trueSettings.get('No Camera Note Movement'))
 		{
-			var camDisplaceExtend:Float = 15;
+			var camDisplaceExtend:Float = 50;
 			if (PlayState.SONG.notes[Std.int(curStep / 16)] != null)
 			{
 				if ((PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection && mustHit)
