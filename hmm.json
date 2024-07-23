@@ -42,8 +42,10 @@
       },
       {
          "name": "hxCodec",
-         "type": "install",
-         "version": "2.6.1"
+         "type": "git",
+         "dir": null,
+         "ref": "master",
+         "url": "https://github.com/SPLCoding/hxCodec-but-it-works-xd"
       },
       {
          "name": "discord_rpc",
