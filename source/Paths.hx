@@ -318,6 +318,11 @@ class Paths
 		return sound;
 	}
 
+	static public function video(key:String)
+	{
+		return SUtil.getPath() + 'assets/videos/$key.$VIDEO_EXT';
+	}
+	
 	inline static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
 	{
 		return sound(key + FlxG.random.int(min, max), library);
