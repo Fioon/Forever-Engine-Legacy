@@ -254,7 +254,7 @@ class PlayState extends MusicBeatState
 
 		try
 		{
-		        modcheatHandler.loadModule(Paths.hxs('data/' + PlayState.SONG.song.toLowerCase() + '/modchart'), exposureLOL);
+		        modcheatHandler.loadModule(Paths.hxs('songs/' + PlayState.SONG.song.toLowerCase() + '/modchart'), exposureLOL);
 		}
 		catch (e:Dynamic)
 		{
