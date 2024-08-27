@@ -65,7 +65,10 @@ import meta.data.dependency.Discord;
 import VideoHandler as MP4Handler;
 
 class PlayState extends MusicBeatState
-{	
+{
+	public static var modcheatHandler:HScript;
+	public static var exposure:StringMap<Dynamic>;
+	
 	public static var startTimer:FlxTimer;
 
 	public var windowDad:Window;
@@ -143,6 +146,7 @@ class PlayState extends MusicBeatState
 
 	public static var camHUD:FlxCamera;
 	public static var camOther:FlxCamera;
+	public static var camText:FlxCamera;
 	public static var camGame:FlxCamera;
 	public static var dialogueHUD:FlxCamera;
 
@@ -199,6 +203,9 @@ class PlayState extends MusicBeatState
 		super.create();
 		instance = this;
 
+		modcheatHandler = new HScript();
+		exposureLOL = new StringMap<Dynamic>();
+
 		FlxTweenPlayState.globalManager.active = true;
 		// reset any values and variables that are static
 		songScore = 0;
@@ -214,6 +221,47 @@ class PlayState extends MusicBeatState
 
 		Timings.callAccuracy();
 
+		exposureLOL.set('songScore', songScore);
+		exposureLOL.set('combo', combo);
+		exposureLOL.set('health', health);
+		exposureLOL.set('misses', misses);
+		exposureLOL.set('defaultCamZoom', defaultCamZoom);
+		exposureLOL.set('cameraSpeed', cameraSpeed);
+		exposureLOL.set('forceZoom', forceZoom);
+		exposureLOL.set('songLength', songLength);
+		exposureLOL.set('startingSong', startingSong);
+		exposureLOL.set('endingSong', endingSong);
+                exposureLOL.set('camDisplaceX', camDisplaceX);
+		exposureLOL.set('camDisplaceY', camDisplaceY);
+		exposureLOL.set('songTime', songTime);
+		exposureLOL.set('startedCountdown', startedCountdown);
+		exposureLOL.set('inCutscene', inCutscene);
+		exposureLOL.set('curSong', curSong);
+		exposureLOL.set('deaths', deaths);
+		exposureLOL.set('allSicks', allSicks);
+		exposureLOL.set('curSection', curSection);
+		exposureLOL.set('isStoryMode', isStoryMode);
+		exposureLOL.set('gf', gf);
+		exposureLOL.set('boyfriend', boyfriend);
+		exposureLOL.set('dadOpponent', dadOpponent);
+		exposureLOL.set('displayRating', displayRating);
+		exposureLOL.set('popUpCombo', popUpCombo);
+		exposureLOL.set('dialogueHUD', dialogueHUD);
+		exposureLOL.set('addByStage', addByStage);
+		exposureLOL.set('startVideo', startVideo);
+		exposureLOL.set('stageBuild', stageBuild);
+		exposureLOL.set('uiHUD', uiHUD);
+
+		try
+		{
+		        modcheatHandler.loadModule(Paths.hxs('data/' + PlayState.SONG.song.toLowerCase() + '/modchart'), exposureLOL);
+		}
+		catch (e:Dynamic)
+		{
+			Application.current.window.alert("An error:\n" + e, "Modchart Error!");
+		}
+
+
 		assetModifier = 'base';
 		changeableSkin = 'default';
 
@@ -227,13 +275,16 @@ class PlayState extends MusicBeatState
 
 		camOther = new FlxCamera();
 		camOther.bgColor.alpha = 0;
+		camText = new FlxCamera();
+		camText.bgColor.alpha = 0;
 		// create the hud camera (separate so the hud stays on screen)
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camOther);
 		FlxG.cameras.add(camHUD);
+		FlxG.cameras.add(camOther);
+		FlxG.cameras.add(camText);
 		allUIs.push(camHUD);
 		FlxCamera.defaultCameras = [camGame];
 
@@ -258,9 +309,16 @@ class PlayState extends MusicBeatState
 		displayRating('sick', 'early', true);
 		popUpCombo(true);
 		//
+		
+
+		if (modcheatHandler.exists("onCreate"))
+			modcheatHandler.get("onCreate")();
 
 		stageBuild = new Stage(curStage);
 		add(stageBuild);
+
+		if (modcheatHandler.exists("onCreateAfter"))
+			modcheatHandler.get("onCreateAfter")();
 
 		// set up characters here too
 		gf = new Character();
@@ -271,9 +329,11 @@ class PlayState extends MusicBeatState
 
 		dadOpponent = new Character().setCharacter(50, 850, SONG.player2);
 		dadStrumSingCharacters.push(dadOpponent);
+
 		boyfriend = new Boyfriend();
 		boyfriend.setCharacter(750, 850, SONG.player1);
 		boyfriendStrumSingCharacters.push(boyfriend);
+		
 		// if you want to change characters later use setCharacter() instead of new or it will break
 
 		var camPos:FlxPoint = new FlxPoint(gf.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);
@@ -289,6 +349,8 @@ class PlayState extends MusicBeatState
 			assetModifier = 'pixel';
 
 		// add characters
+		if (modcheatHandler.exists("onCreateFrontGF"))
+			modcheatHandler.get("onCreateFrontGF")();
 		add(gf);
 
 		// dumb add limo
@@ -296,8 +358,12 @@ class PlayState extends MusicBeatState
 		if (curStage == 'highway')
 			if (Stage.stageHandler.exists("createLimo"))
 				Stage.stageHandler.get("createLimo")();
-
+		
+		if (modcheatHandler.exists("onCreateFrontDad"))
+			modcheatHandler.get("onCreateFrontDad")();
 		add(dadOpponent);
+		if (modcheatHandler.exists("onCreateFrontBF"))
+			modcheatHandler.get("onCreateFrontBF")();
 		add(boyfriend);
 
 		add(stageBuild.foreground);
@@ -307,6 +373,10 @@ class PlayState extends MusicBeatState
 		gf.dance();
 		boyfriend.dance();
 
+		if (modcheatHandler.exists("onCreateAfter"))
+			modcheatHandler.get("onCreateAfter")();
+
+		
 		// set song position before beginning
 		Conductor.songPosition = -(Conductor.crochet * 4);
 
@@ -316,6 +386,7 @@ class PlayState extends MusicBeatState
 		darknessBG.alpha = (100 - Init.trueSettings.get('Stage Opacity')) / 100;
 		darknessBG.scrollFactor.set(0, 0);
 		add(darknessBG);
+		//exposureLOL.set('darknessBG', darknessBG);
 
 		// strum setup
 		strumLines = new FlxTypedGroup<Strumline>();
@@ -464,6 +535,10 @@ class PlayState extends MusicBeatState
 
 		if (Character.scriptHandler.exists("onCreatePost"))
 			Character.scriptHandler.get("onCreatePost")();
+
+		if (modcheatHandler.exists("onCreatePost"))
+			modcheatHandler.get("onCreatePost")();
+		
 	}
 
 	public function addByStage(Object:FlxBasic):FlxBasic
@@ -652,6 +727,9 @@ class PlayState extends MusicBeatState
 
 		if (health > 2)
 			health = 2;
+
+		if (modcheatHandler.exists("onUpdate"))
+			modcheatHandler.get("onUpdate")(elapsed);
 
 		// dialogue checks
 		if (dialogueBox != null && dialogueBox.alive)
@@ -859,6 +937,9 @@ class PlayState extends MusicBeatState
 		}
 		if (Stage.stageHandler.exists("onUpdatePost"))
 			Stage.stageHandler.get("onUpdatePost")(elapsed);
+
+	        if (modcheatHandler.exists("onUpdatePost"))
+			modcheatHandler.get("onUpdatePost")(elapsed);
 
 		@:privateAccess
 		var dadFrame = dadOpponent._frame;
@@ -1147,11 +1228,14 @@ class PlayState extends MusicBeatState
 	}
 
 	function goodNoteHit(coolNote:Note, character:Character, characterStrums:Strumline, ?canDisplayJudgement:Bool = true)
-	{	
+	{
+		if (modcheatHandler.exists("goodNoteHit"))
+			modcheatHandler.get("goodNoteHit")(coolNote, character, characterStrums, canDisplayJudgement);
+		
 		if (!coolNote.wasGoodHit)
 		{
 			coolNote.wasGoodHit = true;
-			vocals.volume = 1;
+	                vocals.volume = 1;
 
 			if (character == boyfriend)
 			{
@@ -1658,7 +1742,9 @@ class PlayState extends MusicBeatState
 	{
 		if (Stage.stageHandler.exists("startSong"))
 			Stage.stageHandler.get("startSong")();
-	        
+
+		if (modcheatHandler.exists("startSong"))
+			modcheatHandler.get("startSong")();
 		startingSong = false;
 
 		previousFrameTime = FlxG.game.ticks;
@@ -1747,6 +1833,9 @@ class PlayState extends MusicBeatState
 
 		if (Stage.stageHandler.exists("stepHit"))
 			Stage.stageHandler.get("stepHit")(curStep);
+
+		if (modcheatHandler.exists("stepHit"))
+			modcheatHandler.get("stepHit")(curStep);
 	}
 
 	private function charactersDance(curBeat:Int)
@@ -1771,6 +1860,9 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
+		if (modcheatHandler.exists("beatHit"))
+			modcheatHandler.get("beatHit")(curBeat);
+		
 		if (bopFrequency != 0)
 		{
 			if ((FlxG.camera.zoom < 1.35 && curBeat % (4 / bopFrequency) == 0)
@@ -1959,6 +2051,9 @@ class PlayState extends MusicBeatState
 
 		if (Character.scriptHandler.exists("onEndSong"))
 			Character.scriptHandler.get("onEndSong")();
+
+		if (modcheatHandler.exists("onEndSong"))
+			modcheatHandler.get("onEndSong")();
 		//
 	}
 
@@ -2139,6 +2234,10 @@ class PlayState extends MusicBeatState
 	{
 		if (Stage.stageHandler.exists("startCountdown"))
 			Stage.stageHandler.get("startCountdown")();
+
+		if (modcheatHandler.exists("startCountdown"))
+			modcheatHandler.get("startCountdown")(swagCounter);
+		
 	        #if android
 		androidControls.visible = true;
 		#end
