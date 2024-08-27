@@ -44,8 +44,8 @@
          "name": "hxCodec",
          "type": "git",
          "dir": null,
-         "ref": "master",
-         "url": "https://github.com/SPLCoding/hxCodec-but-it-works-xd"
+         "ref": "main",
+         "url": "https://github.com/MobilePorting/hxCodec-0.6.3"
       },
       {
          "name": "discord_rpc",
