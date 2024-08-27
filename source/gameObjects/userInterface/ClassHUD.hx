@@ -26,26 +26,26 @@ using StringTools;
 class ClassHUD extends FlxTypedGroup<FlxBasic>
 {
 	// set up variables and stuff here
-	var scoreBar:FlxText;
-	var scoreLast:Float = -1;
+	public static var scoreBar:FlxText;
+	public static var scoreLast:Float = -1;
 
 	// fnf mods
-	var scoreDisplay:String = 'beep bop bo skdkdkdbebedeoop brrapadop';
+	public static var scoreDisplay:String = 'beep bop bo skdkdkdbebedeoop brrapadop';
 
-	var cornerMark:FlxText; // engine mark at the upper right corner
-	var centerMark:FlxText; // song display name and difficulty at the center
+	public static var cornerMark:FlxText; // engine mark at the upper right corner
+	public static var centerMark:FlxText; // song display name and difficulty at the center
 
-	private var healthBarBG:FlxSprite;
-	private var healthBar:FlxBar;
+	public static var healthBarBG:FlxSprite;
+	public static var healthBar:FlxBar;
 
-	private var SONG = PlayState.SONG;
+	public static var SONG = PlayState.SONG;
 
-	public var iconP1:HealthIcon;
-	public var iconP2:HealthIcon;
+	public static var iconP1:HealthIcon;
+	public static var iconP2:HealthIcon;
 
-	private var stupidHealth:Float = 0;
+	public static var stupidHealth:Float = 0;
 
-	private var timingsMap:Map<String, FlxText> = [];
+	public var timingsMap:Map<String, FlxText> = [];
 
 	var infoDisplay:String = CoolUtil.dashToSpace(PlayState.SONG.song);
 	var diffDisplay:String = CoolUtil.difficultyFromNumber(PlayState.storyDifficulty);
