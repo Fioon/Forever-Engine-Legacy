@@ -57,6 +57,8 @@ import openfl.utils.Assets;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
+import VideoHandler;
+import VideoSprite;
 
 using StringTools;
 #if lime
@@ -115,6 +117,9 @@ class HScript
 		interp.variables.set("FlxGraphic", FlxGraphic);
 		interp.variables.set("FlxRuntimeShader", FlxRuntimeShader);
 		//interp.variables.set("FlxTransWindow", flixel.FlxTransWindow);
+
+		interp.variables.set("VideoHandler", VideoHandler);
+		interp.variables.set("VideoSprite", VideoSprite);
 
 		// Classes (Forever)
 		interp.variables.set("Init", Init);
