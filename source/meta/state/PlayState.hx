@@ -67,7 +67,7 @@ import VideoHandler as MP4Handler;
 class PlayState extends MusicBeatState
 {
 	public static var modcheatHandler:HScript;
-	public static var exposure:StringMap<Dynamic>;
+	public static var exposureLOL:StringMap<Dynamic>;
 	
 	public static var startTimer:FlxTimer;
 
