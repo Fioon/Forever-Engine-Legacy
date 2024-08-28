@@ -251,6 +251,7 @@ class PlayState extends MusicBeatState
 		exposureLOL.set('startVideo', startVideo);
 		exposureLOL.set('stageBuild', stageBuild);
 		exposureLOL.set('uiHUD', uiHUD);
+ exposureLOL.set('add', add);
 
 		try
 		{
