@@ -26,26 +26,26 @@ using StringTools;
 class ClassHUD extends FlxTypedGroup<FlxBasic>
 {
 	// set up variables and stuff here
-	public static var scoreBar:FlxText;
-	public static var scoreLast:Float = -1;
+	var scoreBar:FlxText;
+	var scoreLast:Float = -1;
 
 	// fnf mods
-	public static var scoreDisplay:String = 'beep bop bo skdkdkdbebedeoop brrapadop';
+	var scoreDisplay:String = 'beep bop bo skdkdkdbebedeoop brrapadop';
 
-	public static var cornerMark:FlxText; // engine mark at the upper right corner
-	public static var centerMark:FlxText; // song display name and difficulty at the center
+	var cornerMark:FlxText; // engine mark at the upper right corner
+	var centerMark:FlxText; // song display name and difficulty at the center
 
-	public static var healthBarBG:FlxSprite;
-	public static var healthBar:FlxBar;
+	private var healthBarBG:FlxSprite;
+	private var healthBar:FlxBar;
 
-	public static var SONG = PlayState.SONG;
+	private var SONG = PlayState.SONG;
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
 
-	public static var stupidHealth:Float = 0;
+	private var stupidHealth:Float = 0;
 
-	public var timingsMap:Map<String, FlxText> = [];
+	private var timingsMap:Map<String, FlxText> = [];
 
 	var infoDisplay:String = CoolUtil.dashToSpace(PlayState.SONG.song);
 	var diffDisplay:String = CoolUtil.difficultyFromNumber(PlayState.storyDifficulty);
@@ -97,7 +97,7 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 		cornerMark.setPosition(FlxG.width - (cornerMark.width + 5), 5);
 		cornerMark.antialiasing = true;
 
-		centerMark = new FlxText(0, 0, 0, '- ${infoDisplay + " [" + diffDisplay}] -');
+		centerMark = new FlxText(0, 0, 0, '- ${infoDisplay} -');
 		centerMark.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.WHITE);
 		centerMark.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
 		add(centerMark);
