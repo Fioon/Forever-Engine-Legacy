@@ -291,7 +291,7 @@ class Paths
 	
 	inline static public function hxs(key:String, ?library:String)
 	{
-		return getPath('$key.hxs', TEXT, library);
+		return getPath('$key.hx', TEXT, library);
 	}
 
 	inline static public function xml(key:String, ?library:String)
@@ -362,7 +362,7 @@ class Paths
 
 	inline static public function font(key:String)
 	{
-		return 'assets/fonts/$key';
+		return SUtil.getPath() + 'assets/fonts/$key';
 	}
 
 	inline static public function getSparrowAtlas(key:String, ?library:String)
