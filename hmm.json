@@ -37,8 +37,10 @@
       },
       {
          "name": "extension-androidtools",
-         "type": "install",
-         "version": "1.4.0"
+         "type": "git",
+         "dir": null,
+         "ref": "main",
+         "url": "https://github.com/MaysLastPlay77/extension-androidtools"
       },
       {
          "name": "hxCodec",
