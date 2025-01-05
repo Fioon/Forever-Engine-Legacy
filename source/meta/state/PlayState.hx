@@ -59,7 +59,6 @@ import sys.FileSystem;
 #elseif (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
 #elseif (hxCodec == "2.6.0") import VideoHandler;
 #else import vlc.MP4Handler as VideoHandler; #end
-#end
 
 using StringTools;
 
