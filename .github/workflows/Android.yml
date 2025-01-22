@@ -54,8 +54,7 @@ jobs:
           haxelib run lime config ANDROID_SETUP true 
           haxelib set lime 8.1.2
           haxelib set openfl 9.3.3
-          haxelib set
-extension-androidtools 1.4.0
+          haxelib set extension-androidtools 1.4.0
           haxelib set flixel 5.6.2
           haxelib set flixel-ui 2.6.0
           haxelib set flixel-addons 3.2.2
