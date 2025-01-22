@@ -42,10 +42,8 @@
       },
       {
          "name": "hxCodec",
-         "type": "git",
-         "dir": null,
-         "ref": "main",
-         "url": "https://github.com/MobilePorting/hxCodec-0.6.3"
+         "type": "install",
+         "version": "2.6.0"
       },
       {
          "name": "discord_rpc",
