@@ -13,7 +13,7 @@ import flixel.util.FlxColor;
 import flixel.tweens.misc.AngleTween;
 import flixel.util.FlxAxes;
 import flixel.FlxSprite;
-import flixel.tweens.misc.ShakeTween;
+//import flixel.tweens.misc.ShakeTween;
 import flixel.tweens.misc.NumTween;
 import flixel.tweens.FlxTween.FlxTweenManager;
 import flixel.tweens.misc.VarTween;
@@ -43,7 +43,7 @@ class FlxTweenPlayState
 
     public static function shake(Sprite:FlxSprite, Intensity:Float = 0.05, Duration:Float = 1, ?Axes:FlxAxes, ?Options:TweenOptions):ShakeTween
 	{
-		return globalManager.shake(Sprite, Intensity, Duration, Axes, Options);
+		//return globalManager.shake(Sprite, Intensity, Duration, Axes, Options);
 	}
 
     public static function angle(?Sprite:FlxSprite, FromAngle:Float, ToAngle:Float, Duration:Float = 1, ?Options:TweenOptions):AngleTween
