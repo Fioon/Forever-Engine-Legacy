@@ -13,7 +13,7 @@ import flixel.util.FlxColor;
 import flixel.tweens.misc.AngleTween;
 import flixel.util.FlxAxes;
 import flixel.FlxSprite;
-//import flixel.tweens.misc.ShakeTween;
+import flixel.tweens.misc.ShakeTween;
 import flixel.tweens.misc.NumTween;
 import flixel.tweens.FlxTween.FlxTweenManager;
 import flixel.tweens.misc.VarTween;
