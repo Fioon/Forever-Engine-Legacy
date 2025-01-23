@@ -55,10 +55,10 @@ import openfl.media.Sound;
 import openfl.utils.Assets;
 import sys.io.File;
 import sys.FileSystem;
-#if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideo as VideoHandler;
+/*#if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideo as VideoHandler;
 #elseif (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
 #elseif (hxCodec == "2.6.0") import VideoHandler;
-#else import vlc.MP4Handler as VideoHandler; #end
+#else import vlc.MP4Handler as VideoHandler; #end*/
 
 using StringTools;
 
@@ -151,6 +151,8 @@ class PlayState extends MusicBeatState
 	public static var camHUD:FlxCamera;
 	public static var camOther:FlxCamera;
 	public static var camText:FlxCamera;
+	public static var camNote:FlxCamera;
+	public static var camNoteLine:FlxCamera;
 	public static var camGame:FlxCamera;
 	public static var dialogueHUD:FlxCamera;
 
@@ -255,7 +257,7 @@ class PlayState extends MusicBeatState
 		exposureLOL.set('startVideo', startVideo);
 		exposureLOL.set('stageBuild', stageBuild);
 		exposureLOL.set('uiHUD', uiHUD);
- exposureLOL.set('add', add);
+                exposureLOL.set('add', add);
 
 		try
 		{
@@ -287,9 +289,9 @@ class PlayState extends MusicBeatState
 		camHUD.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
+		FlxG.cameras.add(camText);
 		FlxG.cameras.add(camHUD);
 		FlxG.cameras.add(camOther);
-		FlxG.cameras.add(camText);
 		allUIs.push(camHUD);
 		FlxCamera.defaultCameras = [camGame];
 
@@ -427,16 +429,22 @@ class PlayState extends MusicBeatState
 		// initialize ui elements
 		startingSong = true;
 		startedCountdown = true;
-
+		
+                camNote = new FlxCamera();
+		camNote.bgColor.alpha = 0;
 		//
 		var placement = (FlxG.width / 2);
 		dadStrums = new Strumline(placement - (FlxG.width / 4), this, dadOpponent, false, true, false, 4, Init.trueSettings.get('Downscroll'));
 		dadStrums.visible = !Init.trueSettings.get('Centered Notefield');
+		dadStrums.cameras = [camNote];
 		boyfriendStrums = new Strumline(placement + (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false, true,
 			4, Init.trueSettings.get('Downscroll'));
+		boyfriendStrums.cameras = [camNoteLine];
 
 		strumLines.add(dadStrums);
 		strumLines.add(boyfriendStrums);
+		
+		
 
 		// strumline camera setup
 		strumHUD = [];
@@ -448,7 +456,7 @@ class PlayState extends MusicBeatState
 
 			//strumHUD[i].cameras = [camHUD];
 			allUIs.push(strumHUD[i]);
-			FlxG.cameras.add(strumHUD[i]);
+			FlxG.cameras.add(strumHUD[i], false);
 			// set this strumline's camera to the designated camera
 			strumLines.members[i].cameras = [strumHUD[i]];
 		}
@@ -555,7 +563,7 @@ class PlayState extends MusicBeatState
 
 	public function startVideo(name:String)
 	{
-		inCutscene = true;
+		/*inCutscene = true;
 
 		var filepath:String = Paths.video(name);
 		#if sys
@@ -588,6 +596,8 @@ class PlayState extends MusicBeatState
 				return;
 			}
 			#end
+            */
+	                return;
 	}
 
 	function startAndEnd()
@@ -1476,7 +1486,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!Init.trueSettings.get('No Camera Note Movement'))
 		{
-			var camDisplaceExtend:Float = 50;
+			var camDisplaceExtend:Float = 25;
 			if (PlayState.SONG.notes[Std.int(curStep / 16)] != null)
 			{
 				if ((PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection && mustHit)
