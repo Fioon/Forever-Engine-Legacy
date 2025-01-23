@@ -59,9 +59,10 @@ import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
 
-import VideoHandler;
-import VideoSprite;
+//import VideoHandler;
+//import VideoSprite;
 import hxvlc.flixel.FlxVideoSprite;
+import hxvlc.flixel.FlxVideo;
 
 using StringTools;
 #if lime
@@ -123,9 +124,10 @@ class HScript
 		interp.variables.set("FlxRuntimeShader", FlxRuntimeShader);
 		//interp.variables.set("FlxTransWindow", flixel.FlxTransWindow);
 
-		interp.variables.set("VideoHandler", VideoHandler);
-		interp.variables.set("VideoSprite", VideoSprite);
-		interp.variables.set("MP4Sprite", FlxVideoSprite);
+		//interp.variables.set("VideoHandler", VideoHandler);
+		//interp.variables.set("VideoSprite", VideoSprite);
+		interp.variables.set("FlxVideoSprite", FlxVideoSprite);
+		interp.variables.set("FlxVideo", FlxVideo);
 
 		// Classes (Forever)
 		interp.variables.set("Init", Init);
