@@ -48,11 +48,6 @@
          "version": "1.9.2"
       },
       {
-         "name": "hxCodec",
-         "type": "install",
-         "version": "2.6.1"
-      },
-      {
          "name": "discord_rpc",
          "type": "git",
          "dir": null,
