@@ -432,6 +432,10 @@ class PlayState extends MusicBeatState
 		
                 camNote = new FlxCamera();
 		camNote.bgColor.alpha = 0;
+		camNoteLine = new FlxCamera();
+		camNoteLine.bgColor.alpha = 0;
+		FlxG.cameras.add(camNote);
+		FlxG.cameras.add(camNoteLine);
 		//
 		var placement = (FlxG.width / 2);
 		dadStrums = new Strumline(placement - (FlxG.width / 4), this, dadOpponent, false, true, false, 4, Init.trueSettings.get('Downscroll'));
