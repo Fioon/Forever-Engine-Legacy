@@ -26,11 +26,6 @@
          "version": "9.1.0"
       },
       {
-         "name": "polymod",
-         "type": "install",
-         "version": null
-      },
-      {
          "name": "hscript",
          "type": "install",
          "version": "2.5.0"
@@ -41,9 +36,21 @@
          "version": "1.4.0"
       },
       {
+         "name": "hxcpp",
+         "type": "git",
+         "dir": null,
+         "ref": "master",
+         "url": "https://github.com/HaxeFoundation/hxcpp.git"
+      },
+      {
+         "name": "hxvlc",
+         "type": "install",
+         "version": "1.9.2"
+      },
+      {
          "name": "hxCodec",
          "type": "install",
-         "version": "2.6.0"
+         "version": "2.6.1"
       },
       {
          "name": "discord_rpc",
