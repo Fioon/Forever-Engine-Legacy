@@ -14,6 +14,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.tile.FlxGraphicsShader;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
+import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
@@ -57,8 +58,10 @@ import openfl.utils.Assets;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
+
 import VideoHandler;
 import VideoSprite;
+import hxvlc.flixel.FlxVideoSprite;
 
 using StringTools;
 #if lime
@@ -113,6 +116,8 @@ class HScript
 		interp.variables.set("FlxGraphicsShader", FlxGraphicsShader);
 		interp.variables.set("FlxColor", RealColor); // lol
 		interp.variables.set("FlxGroup", FlxGroup);
+		interp.variables.set("FlxSpriteGroup", FlxSpriteGroup);
+		//interp.variables.set("VideoSprite", VideoSprite);
 		interp.variables.set("FlxBar", FlxBar);
 		interp.variables.set("FlxGraphic", FlxGraphic);
 		interp.variables.set("FlxRuntimeShader", FlxRuntimeShader);
@@ -120,6 +125,7 @@ class HScript
 
 		interp.variables.set("VideoHandler", VideoHandler);
 		interp.variables.set("VideoSprite", VideoSprite);
+		interp.variables.set("MP4Sprite", FlxVideoSprite);
 
 		// Classes (Forever)
 		interp.variables.set("Init", Init);
