@@ -8,7 +8,7 @@
       {
          "name": "flixel",
          "type": "install",
-         "version": "5.5.0"
+         "version": "4.11.0"
       },
       {
          "name": "flixel-addons",
