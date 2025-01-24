@@ -186,8 +186,8 @@ class PlayState extends MusicBeatState
 	public var dadStrums:Strumline;
 	public var boyfriendStrums:Strumline;
 
-	private var dadStrumSingCharacters:Array<Character> = [];
-	private var boyfriendStrumSingCharacters:Array<Character> = [];
+	public static var dadStrumSingCharacters:Array<Character> = [];
+	public static var boyfriendStrumSingCharacters:Array<Character> = [];
 	private var gfStrumSingCharacters:Array<Character> = [];
 
 	public static var strumLines:FlxTypedGroup<Strumline>;
