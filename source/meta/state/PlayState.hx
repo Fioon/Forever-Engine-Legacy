@@ -70,7 +70,6 @@ import meta.data.dependency.Discord;
 
 class PlayState extends MusicBeatState
 {
-	public static var noteAlpha:Float = 1;
 	public static var modcheatHandler:HScript;
 	public static var exposureLOL:StringMap<Dynamic>;
 	
@@ -187,8 +186,8 @@ class PlayState extends MusicBeatState
 	public var dadStrums:Strumline;
 	public var boyfriendStrums:Strumline;
 
-	public static var dadStrumSingCharacters:Array<Character> = [];
-	public static var boyfriendStrumSingCharacters:Array<Character> = [];
+	private var dadStrumSingCharacters:Array<Character> = [];
+	private var boyfriendStrumSingCharacters:Array<Character> = [];
 	private var gfStrumSingCharacters:Array<Character> = [];
 
 	public static var strumLines:FlxTypedGroup<Strumline>;
@@ -224,7 +223,6 @@ class PlayState extends MusicBeatState
 
 		defaultCamZoom = 1.05;
 		cameraSpeed = 1;
-		noteAlpha = 1;
 		forceZoom = [0, 0, 0, 0];
 
 		Timings.callAccuracy();
@@ -464,7 +462,7 @@ class PlayState extends MusicBeatState
 			allUIs.push(strumHUD[i]);
 			FlxG.cameras.add(strumHUD[i], false);
 			// set this strumline's camera to the designated camera
-			strumLines.members[i].cameras = [camNoteLine];
+			strumLines.members[i].cameras = [strumHUD[i]];
 		}
 		add(strumLines);
 
@@ -1101,7 +1099,6 @@ class PlayState extends MusicBeatState
 					var psuedoY:Float = (downscrollMultiplier * -((Conductor.songPosition - daNote.strumTime) * (0.45 * roundedSpeed)));
 					var psuedoX = 25 + daNote.noteVisualOffset;
 
-					daNote.alpha = noteAlpha;
 					daNote.y = receptorPosY
 						+ (Math.cos(flixel.math.FlxAngle.asRadians(daNote.noteDirection)) * psuedoY)
 						+ (Math.sin(flixel.math.FlxAngle.asRadians(daNote.noteDirection)) * psuedoX);
@@ -1167,7 +1164,7 @@ class PlayState extends MusicBeatState
 					mainControls(daNote, strumline.character, strumline, strumline.autoplay);
 
 					// check where the note is and make sure it is either active or inactive
-					if (daNote.y > FlxG.height - 50)
+					if (daNote.y > FlxG.height)
 					{
 						daNote.active = false;
 						daNote.visible = false;
@@ -2376,42 +2373,5 @@ class PlayState extends MusicBeatState
 		if (Init.trueSettings.get('Disable Antialiasing') && Std.isOfType(Object, FlxSprite))
 			cast(Object, FlxSprite).antialiasing = false;
 		return super.add(Object);
-	}
-
-        public function addEvent(name:String, value1:String, value2:String):Void
-        {
-		switch (name)
-		{
-			case 'Add Camera Zoom':
-                                if(FlxG.camera.zoom < 1.35) {
-                                        var camZoom:Float = Std.parseFloat(value1);
-                                        var hudZoom:Float = Std.parseFloat(value2);
-                                        if(Math.isNaN(camZoom)) camZoom = 0.015;
-                                        if(Math.isNaN(hudZoom)) hudZoom = 0.03;
-
-                                        FlxG.camera.zoom += camZoom;
-                                        camHUD.zoom += hudZoom;
-		                 }
-				
-			case 'Camera Follow Pos':
-                                if(camFollow != null)
-                                {
-                                        var val1:Float = Std.parseFloat(value1);
-                                        var val2:Float = Std.parseFloat(value2);
-                                        if(Math.isNaN(val1)) val1 = 0;
-                                        if(Math.isNaN(val2)) val2 = 0;
-
-                                        //isCameraOnForcedPos = false;
-                                        if(!Math.isNaN(Std.parseFloat(value1)) || !Math.isNaN(Std.parseFloat(value2))) {
-                                                camFollow.x = val1;
-                                                camFollow.y = val2;
-                                                //isCameraOnForcedPos = true;
-                                         }
-		                }
-
-                        case 'Camera Zoom Adjust':
-                                var zoomamount:Float = Std.parseFloat(value1);
-                                defaultCamZoom = zoomamount;
-                }
 	}
 }
