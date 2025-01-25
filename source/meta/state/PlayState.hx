@@ -1064,7 +1064,6 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-        public note
 	function noteCalls()
 	{
 		// reset strums
