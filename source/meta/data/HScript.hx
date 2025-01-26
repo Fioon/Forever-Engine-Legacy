@@ -139,7 +139,7 @@ class HScript
 		interp.variables.set("Strumline", Strumline);
 		interp.variables.set("Conductor", Conductor);
 		interp.variables.set("UIStaticArrow", UIStaticArrow);
-		interp.variables.set("Character", Character.instance);
+		interp.variables.set("Character", Character);
 		interp.variables.set("BackgroundGirls", BackgroundGirls);
 		interp.variables.set("BackgroundDancer", BackgroundDancer);
 		interp.variables.set("Boyfriend", Boyfriend);
