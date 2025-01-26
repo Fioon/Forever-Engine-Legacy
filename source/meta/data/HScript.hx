@@ -139,7 +139,7 @@ class HScript
 		interp.variables.set("Strumline", Strumline);
 		interp.variables.set("Conductor", Conductor);
 		interp.variables.set("UIStaticArrow", UIStaticArrow);
-		interp.variables.set("Character", Character);
+		interp.variables.set("Character", Character.instance);
 		interp.variables.set("BackgroundGirls", BackgroundGirls);
 		interp.variables.set("BackgroundDancer", BackgroundDancer);
 		interp.variables.set("Boyfriend", Boyfriend);
@@ -148,6 +148,7 @@ class HScript
 		interp.variables.set("PlayState", PlayState);
 		interp.variables.set("Stage", Stage.instance);
 		interp.variables.set("Game", PlayState.instance);
+		interp.variables.set("Actor", Character);
 		interp.variables.set("File", File);
 
 		parser.allowTypes = true;
