@@ -55,6 +55,9 @@ import openfl.media.Sound;
 import openfl.utils.Assets;
 import sys.io.File;
 import sys.FileSystem;
+import hxvlc.flixel.FlxVideoSprite;
+import hxvlc.flixel.FlxVideo;
+
 /*#if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideo as VideoHandler;
 #elseif (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
 #elseif (hxCodec == "2.6.0") import VideoHandler;
