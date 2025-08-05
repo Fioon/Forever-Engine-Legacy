@@ -200,6 +200,10 @@ class PlayState extends MusicBeatState
 	// stores the last combo objects in an array
 	public static var lastCombo:Array<FlxSprite>;
 	public static var instance:PlayState;
+
+	public var bopIntensity:Float = 1;
+	public var bopFrequency:Float = 1;
+	public var camZooming:Bool = true;
 	
 	// at the beginning of the playstate
 	override public function create()
@@ -247,6 +251,7 @@ class PlayState extends MusicBeatState
 		exposureLOL.set('boyfriend', boyfriend);
 		exposureLOL.set('dadOpponent', dadOpponent);
 		exposureLOL.set('addByStage', addByStage);
+		exposureLOL.set('triggerEvent', triggerEvent);
 		exposureLOL.set('uiHUD', uiHUD);
                 exposureLOL.set('add', add);
 
@@ -528,11 +533,15 @@ class PlayState extends MusicBeatState
 
 		eventHandler = new HScript();
 		exposure = new StringMap<Dynamic>();
-		exposure.set('name', null);
-		exposure.set('value1', null);
-		exposure.set('value2', null);
+		exposure.set('gf', gf);
+		exposure.set('boyfriend', boyfriend);
+		exposure.set('dadOpponent', dadOpponent);
+		exposure.set('addByStage', addByStage);
+		exposure.set('uiHUD', uiHUD);
+                exposure.set('add', add);
+		exposure.set('curSong', curSong);
 		eventHandler.loadModule(Paths.hxs("hscripts/events"), exposure);
-
+		
 		if (Stage.stageHandler.exists("onCreatePost"))
 			Stage.stageHandler.get("onCreatePost")();
 
@@ -555,6 +564,43 @@ class PlayState extends MusicBeatState
 	{
 		//Nothing lol
 	        return;
+	}
+	
+	public function triggerEvent(name:String, value1:String = null, value2:String = null, value3:String = null):Void
+	{	
+		try{
+			if (eventHandler.exists("onEventFunction"))
+				eventHandler.get("onEventFunction")(name, value1, value2, value3);
+		}
+		catch (e:Dynamic){
+			Application.current.window.alert("An error while triggering the event:\n" + e, "Script Error!");
+		}
+
+		switch (name){
+			case 'Add Camera Zoom':
+				switch (value1){
+			             case 'camGame':
+				         camGame.zoom += Std.parseFloat(value2);
+			             case 'camHUD':
+                                         camHUD.zoom += Std.parseFloat(value2);
+                                     case 'strumHUD':
+                                         strumHUD[0].zoom += Std.parseFloat(value2);
+                                         strumHUD[1].zoom += Std.parseFloat(value2);
+			             case 'camOther':
+                                         camOther.zoom += Std.parseFloat(value2);
+				     case 'camNote':
+                                         camNote.zoom += Std.parseFloat(value2);
+                                }
+			case 'Camera Bop Speed':
+				var intensity = Std.parseFloat(value1);
+				if (Math.isNaN(intensity))
+					intensity = 0;
+				var speed = Std.parseFloat(value2);
+				if (Math.isNaN(speed)) 
+					speed = 0;
+				bopIntensity = intensity;
+				bopFrequency = speed;
+		}
 	}
 	
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey>
@@ -1354,17 +1400,7 @@ class PlayState extends MusicBeatState
 
 	public function eventNoteHit(name:String, value1:String = null, value2:String = null):Void
 	{
-		try
-		{
-			if (eventHandler.exists("onEventFunction"))
-				eventHandler.get("onEventFunction")(name, value1, value2);
-			if (Stage.stageHandler.exists("onEvent"))
-				Stage.stageHandler.get("onEvent")(name, value1, value2);
-		}
-		catch (e:Dynamic)
-		{
-			Application.current.window.alert("An error while triggering the event:\n" + e, "Script Error!");
-		}
+	        return;
 	}
 
 	private function mainControls(daNote:Note, char:Character, strumline:Strumline, autoplay:Bool):Void
@@ -1821,9 +1857,6 @@ class PlayState extends MusicBeatState
 			dadOpponent.dance();
 	}
 	
-	public var bopIntensity:Float = 1;
-	public var bopFrequency:Float = 1;
-	public var camZooming:Bool = true;
 	override function beatHit()
 	{
 		super.beatHit();
