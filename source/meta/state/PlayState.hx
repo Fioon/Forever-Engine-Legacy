@@ -58,21 +58,17 @@ import sys.FileSystem;
 import hxvlc.flixel.FlxVideoSprite;
 import hxvlc.flixel.FlxVideo;
 
-/*#if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideo as VideoHandler;
-#elseif (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
-#elseif (hxCodec == "2.6.0") import VideoHandler;
-#else import vlc.MP4Handler as VideoHandler; #end*/
-
 using StringTools;
 
 #if desktop
 import meta.data.dependency.Discord;
 #end
 
-//import VideoHandler as MP4Handler;
-
 class PlayState extends MusicBeatState
 {
+        public static var eventHandler:HScript;
+	public static var exposure:StringMap<Dynamic>;
+	
 	public static var modcheatHandler:HScript;
 	public static var exposureLOL:StringMap<Dynamic>;
 	
@@ -155,13 +151,14 @@ class PlayState extends MusicBeatState
 	public static var camOther:FlxCamera;
 	public static var camText:FlxCamera;
 	public static var camNote:FlxCamera;
-	public static var camNoteLine:FlxCamera;
 	public static var camGame:FlxCamera;
 	public static var dialogueHUD:FlxCamera;
 
 	public var camDisplaceX:Float = 0;
-	public var camDisplaceY:Float = 0; // might not use depending on result
+	public var camDisplaceY:Float = 0;// might not use depending on result
 
+	public var camDisplace:Float = 15;
+	
 	public static var cameraSpeed:Float = 1;
 
 	public static var defaultCamZoom:Float = 1.05;
@@ -203,9 +200,7 @@ class PlayState extends MusicBeatState
 	// stores the last combo objects in an array
 	public static var lastCombo:Array<FlxSprite>;
 	public static var instance:PlayState;
-	public static var eventHandler:HScript;
-
-	public static var exposure:StringMap<Dynamic>;
+	
 	// at the beginning of the playstate
 	override public function create()
 	{
@@ -215,7 +210,6 @@ class PlayState extends MusicBeatState
 		modcheatHandler = new HScript();
 		exposureLOL = new StringMap<Dynamic>();
 
-		FlxTweenPlayState.globalManager.active = true;
 		// reset any values and variables that are static
 		songScore = 0;
 		combo = 0;
@@ -236,7 +230,6 @@ class PlayState extends MusicBeatState
 		exposureLOL.set('misses', misses);
 		exposureLOL.set('defaultCamZoom', defaultCamZoom);
 		exposureLOL.set('cameraSpeed', cameraSpeed);
-		exposureLOL.set('forceZoom', forceZoom);
 		exposureLOL.set('songLength', songLength);
 		exposureLOL.set('startingSong', startingSong);
 		exposureLOL.set('endingSong', endingSong);
@@ -253,12 +246,7 @@ class PlayState extends MusicBeatState
 		exposureLOL.set('gf', gf);
 		exposureLOL.set('boyfriend', boyfriend);
 		exposureLOL.set('dadOpponent', dadOpponent);
-		exposureLOL.set('displayRating', displayRating);
-		exposureLOL.set('popUpCombo', popUpCombo);
-		exposureLOL.set('dialogueHUD', dialogueHUD);
 		exposureLOL.set('addByStage', addByStage);
-		exposureLOL.set('startVideo', startVideo);
-		exposureLOL.set('stageBuild', stageBuild);
 		exposureLOL.set('uiHUD', uiHUD);
                 exposureLOL.set('add', add);
 
@@ -282,7 +270,6 @@ class PlayState extends MusicBeatState
 
 		// create the game camera
 		camGame = new FlxCamera();
-
 		camOther = new FlxCamera();
 		camOther.bgColor.alpha = 0;
 		camText = new FlxCamera();
@@ -290,12 +277,14 @@ class PlayState extends MusicBeatState
 		// create the hud camera (separate so the hud stays on screen)
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
+		camNote = new FlxCamera();
+		camNote.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camText);
 		FlxG.cameras.add(camHUD);
-		FlxG.cameras.add(camOther);
 		allUIs.push(camHUD);
+		FlxG.cameras.add(camNote);
 		FlxCamera.defaultCameras = [camGame];
 
 		// default song
@@ -327,8 +316,8 @@ class PlayState extends MusicBeatState
 		stageBuild = new Stage(curStage);
 		add(stageBuild);
 
-		if (modcheatHandler.exists("onCreateAfter"))
-			modcheatHandler.get("onCreateAfter")();
+		if (modcheatHandler.exists("onCreateAfterStage"))
+			modcheatHandler.get("onCreateAfterStage")();
 
 		// set up characters here too
 		gf = new Character();
@@ -433,26 +422,18 @@ class PlayState extends MusicBeatState
 		startingSong = true;
 		startedCountdown = true;
 		
-                camNote = new FlxCamera();
-		camNote.bgColor.alpha = 0;
-		camNoteLine = new FlxCamera();
-		camNoteLine.bgColor.alpha = 0;
-		FlxG.cameras.add(camNote);
-		FlxG.cameras.add(camNoteLine);
 		//
 		var placement = (FlxG.width / 2);
+		
 		dadStrums = new Strumline(placement - (FlxG.width / 4), this, dadOpponent, false, true, false, 4, Init.trueSettings.get('Downscroll'));
 		dadStrums.visible = !Init.trueSettings.get('Centered Notefield');
-		dadStrums.cameras = [camNote];
+	
 		boyfriendStrums = new Strumline(placement + (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false, true,
 			4, Init.trueSettings.get('Downscroll'));
-		boyfriendStrums.cameras = [camNoteLine];
 
 		strumLines.add(dadStrums);
 		strumLines.add(boyfriendStrums);
 		
-		
-
 		// strumline camera setup
 		strumHUD = [];
 		for (i in 0...strumLines.length)
@@ -485,6 +466,8 @@ class PlayState extends MusicBeatState
 		botplayText.borderSize = 1.25;
 		add(botplayText);
 		botplayText.cameras = [dialogueHUD];
+
+		FlxG.cameras.add(camOther);
 		
 		#if android
 		addAndroidControls();
@@ -570,49 +553,8 @@ class PlayState extends MusicBeatState
 
 	public function startVideo(name:String)
 	{
-		/*inCutscene = true;
-
-		var filepath:String = Paths.video(name);
-		#if sys
-		if(!FileSystem.exists(filepath))
-		#else
-		if(!OpenFlAssets.exists(filepath))
-		#end
-		{
-			FlxG.log.warn('Couldnt find video file: ' + name);
-			startAndEnd();
-			return;
-		}
-
-		var video:VideoHandler = new VideoHandler();
-			#if (hxCodec >= "3.0.0")
-			// Recent versions
-			video.play(filepath);
-			video.onEndReached.add(function()
-			{
-				video.dispose();
-				startAndEnd();
-				return;
-			}, true);
-			#else
-			// Older versions
-			video.playVideo(filepath);
-			video.finishCallback = function()
-			{
-				startAndEnd();
-				return;
-			}
-			#end
-            */
-	                return;
-	}
-
-	function startAndEnd()
-	{
-		if(endingSong)
-			endSong();
-		else
-			startCountdown();
+		//Nothing lol
+	        return;
 	}
 	
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey>
@@ -751,7 +693,6 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		FlxTweenPlayState.globalManager.update(elapsed);
 		botplayAlpha = FlxMath.lerp(botplayAlpha, strumLines.members[playerLane].autoplay ? 1 : 0, elapsed / (1 / 60));
 		botplaySine += 180 * (elapsed / 4);
 		botplayText.alpha = botplayAlpha - Math.abs(Math.sin((Math.PI * botplaySine) / 180));
@@ -1290,10 +1231,10 @@ class PlayState extends MusicBeatState
 			}
 			if (characterStrums.receptors.members[coolNote.noteData] != null)
 				characterStrums.receptors.members[coolNote.noteData].playAnim('confirm', true);
-			if (coolNote.noteData == -1)
+			/*if (coolNote.noteData == -1)
 			{
 				eventNoteHit(coolNote.eventName, coolNote.value1, coolNote.value2);
-			}
+			}*/
 
 			// special thanks to sam, they gave me the original system which kinda inspired my idea for this new one
 			if (canDisplayJudgement)
@@ -1493,7 +1434,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!Init.trueSettings.get('No Camera Note Movement'))
 		{
-			var camDisplaceExtend:Float = 25;
+			var camDisplaceExtend:Float = camDisplace;
 			if (PlayState.SONG.notes[Std.int(curStep / 16)] != null)
 			{
 				if ((PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection && mustHit)
@@ -1761,10 +1702,6 @@ class PlayState extends MusicBeatState
 
 	function healthCall(?ratingMultiplier:Float = 0)
 	{
-	        if (Stage.stageHandler.exists("healthCall"))
-			Stage.stageHandler.get("healthCall")(ratingMultiplier);
-	        	
-		// health += 0.012;
 		var healthBase:Float = 0.06;
 		health += (healthBase * (ratingMultiplier / 100));
 	}
@@ -1987,7 +1924,6 @@ class PlayState extends MusicBeatState
 				//	trace('nulled song finished');
 			}
 
-			FlxTweenPlayState.globalManager.active = false;
 			// trace('ui shit break');
 			if ((startTimer != null) && (!startTimer.finished))
 				startTimer.active = false;
@@ -2012,7 +1948,6 @@ class PlayState extends MusicBeatState
 			///*
 			updateRPC(false);
 			// */
-			FlxTweenPlayState.globalManager.active = true;
 		}
 
 		Paths.clearUnusedMemory();
@@ -2029,7 +1964,7 @@ class PlayState extends MusicBeatState
 	function endSong():Void
 	{
 		endingSong = true;
-	    #if android
+	        #if android
 		androidControls.visible = false;
 		#end
 		
@@ -2133,9 +2068,6 @@ class PlayState extends MusicBeatState
 
 	public function songIntroCutscene()
 	{
-		if (Stage.stageHandler.exists("songIntroCutscene"))
-			Stage.stageHandler.get("songIntroCutscene")();
-	        
 		switch (curSong.toLowerCase())
 		{
 			case "winter-horrorland":
