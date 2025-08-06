@@ -164,6 +164,7 @@ class MusicBeatState extends FNFUIState
 		updateContents();
 
 		super.update(elapsed);
+		ShaderObject.update(elapsed);
 	}
 
 	public function updateContents()
