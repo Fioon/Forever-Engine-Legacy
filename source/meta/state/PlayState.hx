@@ -221,6 +221,7 @@ class PlayState extends MusicBeatState
 		misses = 0;
 		// sets up the combo object array
 		lastCombo = [];
+		                FlxTweenPlayState.globalManager.active = true;
 
 		defaultCamZoom = 1.05;
 		cameraSpeed = 1;
@@ -736,7 +737,7 @@ class PlayState extends MusicBeatState
 	override public function update(elapsed:Float)
 	{
 		stageBuild.stageUpdateConstant(elapsed, boyfriend, gf, dadOpponent);
-
+		FlxTweenPlayState.globalManager.update(elapsed);
 		super.update(elapsed);
 
 		botplayAlpha = FlxMath.lerp(botplayAlpha, strumLines.members[playerLane].autoplay ? 1 : 0, elapsed / (1 / 60));
@@ -1960,6 +1961,11 @@ class PlayState extends MusicBeatState
 			// trace('ui shit break');
 			if ((startTimer != null) && (!startTimer.finished))
 				startTimer.active = false;
+			FlxTweenPlayState.globalManager.active = false;
+			camGame.active = false;
+			camHUD.active = false;
+			camText.active = false;
+			camNote.active = false;
 		}
 
 		// trace('open substate');
@@ -1981,6 +1987,11 @@ class PlayState extends MusicBeatState
 			///*
 			updateRPC(false);
 			// */
+			FlxTweenPlayState.globalManager.active = true;
+			camGame.active = true;
+			camHUD.active = true;
+			camText.active = true;
+			camNote.active = true;
 		}
 
 		Paths.clearUnusedMemory();
