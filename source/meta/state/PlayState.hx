@@ -29,6 +29,7 @@ import gameObjects.*;
 import gameObjects.userInterface.*;
 import gameObjects.userInterface.notes.*;
 import gameObjects.userInterface.notes.Strumline.UIStaticArrow;
+import gameObjects.userInterface.VideoSprite;
 import haxe.ds.StringMap;
 import lime.app.Application;
 import lime.graphics.RenderContext;
@@ -152,6 +153,7 @@ class PlayState extends MusicBeatState
 	public static var camText:FlxCamera;
 	public static var camNote:FlxCamera;
 	public static var camGame:FlxCamera;
+	public static var camVideo:FlxCamera;
 	public static var dialogueHUD:FlxCamera;
 
 	public var camDisplaceX:Float = 0;
@@ -291,13 +293,16 @@ class PlayState extends MusicBeatState
 		camHUD.bgColor.alpha = 0;
 		camNote = new FlxCamera();
 		camNote.bgColor.alpha = 0;
+		camVideo = new FlxCamera();
+		camVideo.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camText);
-		FlxG.cameras.add(camHUD);
+		FlxG.cameras.add(camText, false);
+		FlxG.cameras.add(camHUD, false);
 		allUIs.push(camHUD);
-		FlxG.cameras.add(camNote);
-		FlxCamera.defaultCameras = [camGame];
+		FlxG.cameras.add(camNote, false);
+		FlxG.cameras.add(camVideo, false);
+		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 
 		// default song
 		if (SONG == null)
@@ -569,10 +574,46 @@ class PlayState extends MusicBeatState
 		return add(Object);
 	}
 
-	public function startVideo(name:String)
+	public function playVideoSprite(name:String, ?vis:Bool = true, finishCallback:()->Void, x:Float = 0, y:Float = 0, scaleX:Float = 1, scaleY:Float = 1){
+		inCutscene = true;
+		var videoSprite:VideoSprite = new VideoSprite(false);
+		videoSprite.scrollFactor.set();
+		videoSprite.scale.set(scaleX, scaleY);
+		videoSprite.x = x;
+		videoSprite.y = y;
+		videoSprite.cameras = [camVideo];
+		videoSprite.visible = vis;
+		videoSprite.onEndCallback = ()->{
+			trace("video gone");
+			remove(videoSprite);
+			videoSprite.kill();
+			inCutscene = false;
+		};
+
+		camVideo.visible = true;
+
+		videoSprite.onStartCallback = ()->{
+			//im pr sure this is redundant now with hxvlc not starting vid until play is called but whatyever lol
+			if(vis) videoSprite.visible=true;
+		};
+
+		// this is weird but oh well! it works tho!
+		videoSprite.addCallback("onEnd", () -> {
+			camVideo.visible = false;
+			if (finishCallback != null) finishCallback();
+		});
+
+		videoSprite.load(Paths.video(name));
+		videoSprite.play();
+		add(videoSprite);
+	}
+
+	function startAndEnd()
 	{
-		//Nothing lol
-	        return;
+		if(endingSong)
+			endSong();
+		else
+			startCountdown();
 	}
 	
 	public function triggerEvent(name:String, value1:String = null, value2:String = null, value3:String = null):Void
