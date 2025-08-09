@@ -66,7 +66,7 @@ import meta.data.dependency.Discord;
 
 class PlayState extends MusicBeatState
 {
-        public static var eventHandler:HScript;
+    public static var eventHandler:HScript;
 	public static var exposure:StringMap<Dynamic>;
 	
 	public static var modcheatHandler:HScript;
@@ -207,9 +207,9 @@ class PlayState extends MusicBeatState
 	public var bopFrequency:Float = 1;
 	public var camZooming:Bool = true;
 
-	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, FlxSprite>();
+	public var modchartSprites:Map<String, FlxSprite> = new Map<String, FlxSprite>();
 	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
-	public var modchartTexts:Map<String, ModchartText> = new Map<String, FlxText>();
+	public var modchartTexts:Map<String, FlxText> = new Map<String, FlxText>();
 	
 	// at the beginning of the playstate
 	override public function create()
