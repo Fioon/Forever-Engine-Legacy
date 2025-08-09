@@ -167,6 +167,8 @@ class PlayState extends MusicBeatState
 
 	public static var songScore:Int = 0;
 
+	public static var songName:String = "";
+
 	var storyDifficultyText:String = "";
 
 	public static var iconRPC:String = "";
@@ -204,6 +206,10 @@ class PlayState extends MusicBeatState
 	public var bopIntensity:Float = 1;
 	public var bopFrequency:Float = 1;
 	public var camZooming:Bool = true;
+
+	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, FlxSprite>();
+	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
+	public var modchartTexts:Map<String, ModchartText> = new Map<String, FlxText>();
 	
 	// at the beginning of the playstate
 	override public function create()
@@ -221,7 +227,7 @@ class PlayState extends MusicBeatState
 		misses = 0;
 		// sets up the combo object array
 		lastCombo = [];
-		                FlxTweenPlayState.globalManager.active = true;
+		FlxTweenPlayState.globalManager.active = true;
 
 		defaultCamZoom = 1.05;
 		cameraSpeed = 1;
@@ -238,7 +244,7 @@ class PlayState extends MusicBeatState
 		exposureLOL.set('songLength', songLength);
 		exposureLOL.set('startingSong', startingSong);
 		exposureLOL.set('endingSong', endingSong);
-                exposureLOL.set('camDisplaceX', camDisplaceX);
+        exposureLOL.set('camDisplaceX', camDisplaceX);
 		exposureLOL.set('camDisplaceY', camDisplaceY);
 		exposureLOL.set('songTime', songTime);
 		exposureLOL.set('startedCountdown', startedCountdown);
@@ -254,7 +260,7 @@ class PlayState extends MusicBeatState
 		exposureLOL.set('addByStage', addByStage);
 		exposureLOL.set('triggerEvent', triggerEvent);
 		exposureLOL.set('uiHUD', uiHUD);
-                exposureLOL.set('add', add);
+        exposureLOL.set('add', add);
 
 		try
 		{
@@ -299,6 +305,8 @@ class PlayState extends MusicBeatState
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
+
+		songName = SONG.song.toLowerCase();
 
 		/// here we determine the chart type!
 		// determine the chart type here
@@ -1962,10 +1970,6 @@ class PlayState extends MusicBeatState
 			if ((startTimer != null) && (!startTimer.finished))
 				startTimer.active = false;
 			FlxTweenPlayState.globalManager.active = false;
-			camGame.active = false;
-			camHUD.active = false;
-			camText.active = false;
-			camNote.active = false;
 		}
 
 		// trace('open substate');
@@ -1987,11 +1991,7 @@ class PlayState extends MusicBeatState
 			///*
 			updateRPC(false);
 			// */
-			FlxTweenPlayState.globalManager.active = true;
-			camGame.active = true;
-			camHUD.active = true;
-			camText.active = true;
-			camNote.active = true;
+			FlxTweenPlayState.globalManager.active = true;			
 		}
 
 		Paths.clearUnusedMemory();
@@ -2008,7 +2008,7 @@ class PlayState extends MusicBeatState
 	function endSong():Void
 	{
 		endingSong = true;
-	        #if android
+	    #if android
 		androidControls.visible = false;
 		#end
 		
