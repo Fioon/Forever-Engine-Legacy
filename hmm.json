@@ -45,7 +45,7 @@
       {
          "name": "hxvlc",
          "type": "install",
-         "version": "1.9.2"
+         "version": "1.8.1"
       },
       {
          "name": "discord_rpc",
