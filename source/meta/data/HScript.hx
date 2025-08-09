@@ -29,6 +29,7 @@ import gameObjects.Boyfriend;
 import gameObjects.Character;
 import gameObjects.Stage;
 import gameObjects.background.*;
+import gameObjects.userInterface.VideoSprite;
 import gameObjects.userInterface.HealthIcon;
 import gameObjects.userInterface.notes.Note;
 import gameObjects.userInterface.notes.Strumline;
@@ -58,11 +59,6 @@ import openfl.utils.Assets;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
-
-//import VideoHandler;
-//import VideoSprite;
-import hxvlc.flixel.FlxVideoSprite;
-import hxvlc.flixel.FlxVideo;
 
 using StringTools;
 #if lime
@@ -124,11 +120,8 @@ class HScript
 		interp.variables.set("FlxRuntimeShader", FlxRuntimeShader);
 		//interp.variables.set("FlxTransWindow", flixel.FlxTransWindow);
 
-		//interp.variables.set("VideoHandler", VideoHandler);
-		//interp.variables.set("VideoSprite", VideoSprite);
-		interp.variables.set("FlxVideoSprite", FlxVideoSprite);
-		interp.variables.set("FlxVideo", FlxVideo);
-
+		interp.variables.set("VideoSprite", VideoSprite);
+		
 		// Classes (Forever)
 		interp.variables.set("Init", Init);
 		interp.variables.set("Paths", Paths);
@@ -195,3 +188,4 @@ class HScript
 	public function exists(field:String):Bool
 		return interp.variables.exists(field);
 }
+
