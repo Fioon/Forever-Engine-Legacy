@@ -297,12 +297,12 @@ class PlayState extends MusicBeatState
 		camVideo.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camText, false);
-		FlxG.cameras.add(camHUD, false);
+		FlxG.cameras.add(camText);
+		FlxG.cameras.add(camHUD);
 		allUIs.push(camHUD);
-		FlxG.cameras.add(camNote, false);
-		FlxG.cameras.add(camVideo, false);
-		FlxG.cameras.setDefaultDrawTarget(camGame, true);
+		FlxG.cameras.add(camNote);
+		FlxG.cameras.add(camVideo);
+		FlxCamera.defaultCameras = [camGame];
 
 		// default song
 		if (SONG == null)
