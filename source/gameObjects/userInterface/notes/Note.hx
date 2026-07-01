@@ -15,6 +15,7 @@ import meta.data.dependency.FNFSprite;
 import meta.state.PlayState;
 import meta.data.HScript;
 import lime.app.Application;
+import haxe.ds.StringMap;
 
 using StringTools;
 
