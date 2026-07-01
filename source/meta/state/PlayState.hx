@@ -1195,6 +1195,7 @@ class PlayState extends MusicBeatState
                                         default:
                                             if (daNote.noteHandler.exists("noteMiss"))
 			                                    daNote.noteHandler.get("noteMiss")(daNote.noteType, boyfriend);
+									}
                                 }
 								vocals.volume = 0;
 								missNoteCheck((Init.trueSettings.get('Ghost Tapping')) ? true : false, daNote.noteData, boyfriend, true);
@@ -1227,6 +1228,7 @@ class PlayState extends MusicBeatState
                                                         if (daNote.noteHandler.exists("noteMiss"))
 			                                                daNote.noteHandler.get("noteMiss")(daNote.noteType, boyfriend);
                                                 }
+											}
 											missNoteCheck((Init.trueSettings.get('Ghost Tapping')) ? true : false, daNote.noteData, boyfriend, true);
 											for (note in parentNote.childrenNotes)
 												note.tooLate = true;
@@ -1308,6 +1310,7 @@ class PlayState extends MusicBeatState
 				        default:
                             if (coolNote.noteHandler.exists("goodnoteHitBF"))
 			                    coolNote.noteHandler.get("goodnoteHitBF")(boyfriendStrumSingCharacters, coolNote.noteType);
+					}
 				}
 			}
 			if (character == dadOpponent)
@@ -1324,6 +1327,7 @@ class PlayState extends MusicBeatState
 				        default:
                             if (coolNote.noteHandler.exists("goodnoteHitDAD"))
 			                    coolNote.noteHandler.get("goodnoteHitDAD")(dadStrumSingCharacters, coolNote.noteType);
+					}
 				}
 			}
 			if (character == gf)
