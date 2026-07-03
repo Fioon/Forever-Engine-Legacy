@@ -806,7 +806,7 @@ class PlayState extends MusicBeatState
                         if (FlxG.keys.justPressed.SHIFT#if android || FlxG.android.justReleased.BACK #end)
                                 dialogueBox.closeDialog();
 
-            var pressedEnter:Bool = controls.ACCEPT;
+                        var pressedEnter:Bool = false;
 
                         #if android
                         for (touch in FlxG.touches.list)
@@ -815,7 +815,7 @@ class PlayState extends MusicBeatState
                         #end
 
                         // the change I made was just so that it would only take accept inputs
-                        if (controls.ACCEPT && dialogueBox.textStarted)
+                        if (pressedEnter && dialogueBox.textStarted)
                         {
                                 FlxG.sound.play(Paths.sound('cancelMenu'));
                                 dialogueBox.curPage += 1;
