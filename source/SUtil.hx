@@ -60,7 +60,7 @@ class SUtil
                         if (!FileSystem.exists(SUtil.getPath() + 'assets/'))
                         {
                                 SUtil.applicationAlert('Error!',
-                                        "Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+                                        "Can not find .ForeverEngine/assets in your phone!\nPlease watch the tutorial by pressing OK.");
                                 FlxG.openURL('https://youtu.be/zjvkTmdWvfU');
                                 System.exit(1);
                         }
